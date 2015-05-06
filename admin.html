@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Outsourcing Production Dashboard | Hyundai Translead</title>
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/funciones.js"></script>
+</head>
+<!--    translead-dashboard.esy.es-->
+<body>
+    <header>
+        <div><a href="main.html"><img src="images/logo.png" alt="Hyundai Translead" class="logo"></a></div>
+        <div>
+            <h2>Outsourcing Production Dashboard</h2>
+        </div>
+        <div class="user-data">
+            <a>Hello, Juan Salgado!</a>
+            <a href="#" class="option"><img src="images/gears2.png">Settings</a>
+            <a href="index.html" class="option"><img src="images/lock2.png">Log out</a>
+            <a href="#" class="option"><img src="images/calendar2.png">Dashboard</a>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="main-menu">
+            <ul>
+                <li><a href="main.html">Schedule</a></li>
+                <li><a href="#" class="active">Administration</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <ul>
+                <li>Schedule
+                    <ul>
+                        <li onclick="scheduleAdd()">Add</li>
+                        <li onclick="scheduleEdit()">Edit</li>
+                        <li>Delete</li>
+                    </ul>
+                </li>
+                <li>Sub-Assy
+                    <ul>
+                        <li>Add</li>
+                        <li>Edit</li>
+                        <li>Delete</li>
+                    </ul>
+                </li>
+                <li>Production
+                    <ul>
+                        <li>Confirm</li>
+                        <li>Edit</li>
+                        <li>Delete</li>
+                    </ul>
+                </li>
+                <li>Deliveries
+                    <ul>
+                        <li>Add</li>
+                        <li>Confirm</li>
+                        <li>Edit</li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="ajax">
+        </div>
+    </div>    
+</body>
+</html>
