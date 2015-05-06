@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Outsourcing Production Dashboard | Hyundai Translead</title>
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+    <header>
+        <div><a href="#"><img src="images/logo.png" alt="Hyundai Translead" class="logo"></a></div>
+        <div>
+            <h2>Outsourcing Production Dashboard</h2>
+        </div>
+    </header>
+    <div class="container">
+        <div class="login">
+            <h4>SIGN IN</h4>
+            <hr>
+            <form>
+                <fieldset>
+                    <label>Your email address:</label>
+                    <input type="email" placeholder="Email address" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter your email.')">       
+                    <label>Password:</label>
+                    <input type="password" placeholder="Password" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter your password.')">
+                    <input type="submit" value="Sign in" formaction="main.html">
+                </fieldset> 
+                <a href="#">Forgot your password?</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
