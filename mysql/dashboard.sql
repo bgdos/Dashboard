@@ -64,20 +64,23 @@ create table material
 alter table material add foreign key (model_Id) references model(id);
 alter table material add foreign key (po_Id) references po(id);
 
-create table prod
+create table produced
 (
     id int not null primary key auto_increment,
     qty int not null,
+    p_date date not null,
     model_Id int not null,
     material_Id int null
 );
-alter table prod add foreign key (model_Id) references model(id);
-alter table prod add foreign key (material_Id) references material(id);
+alter table produced add foreign key (model_Id) references model(id);
+alter table produced add foreign key (material_Id) references material(id);
 
 create table delivery
 (
     id int not null primary key auto_increment,
     qty int not null,
+    d_date date not null,
+    total int not null,
     model_Id int not null,
     material_Id int not null
 );
