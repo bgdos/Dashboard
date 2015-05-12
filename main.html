@@ -7,10 +7,12 @@
     <meta charset="UTF-8" />
     <link href="css/style.css" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
+    <script src="js/progress.js"></script>
+    <script src="js/jquery.tablesorter.js"></script>
     <script src="js/funciones.js"></script>
 </head>
 <!--    translead-dashboard.esy.es-->
-<body>
+<body onload="progress(); tablesort('.prod-status')">
     <header>
         <div><a href="main.html"><img src="images/logo.png" alt="Hyundai Translead" class="logo"></a></div>
         <div>
@@ -20,13 +22,13 @@
             <a>Hello, Juan Salgado!</a>
             <a href="#" class="option"><img src="images/gears2.png">Settings</a>
             <a href="index.html" class="option"><img src="images/lock2.png">Log out</a>
-            <a href="#" class="option"><img src="images/calendar2.png">Dashboard</a>
+            <a href="main.html" class="option"><img src="images/calendar2.png">Dashboard</a>
         </div>
     </header>
     <div class="container">
         <nav class="main-menu">
             <ul>
-                <li><a href="#" class="active">Schedule</a></li>
+                <li><a href="#" class="active">Dashboard</a></li>
                 <li><a href="adminht.html">Administration</a></li>
             </ul>
         </nav>
@@ -35,12 +37,6 @@
             <hr>
             <label>Month:</label>
             <input type="month" min="2015-04" value="2015-04" id="month" onblur="production()">
-            <!--<select onchange="production()" id="month">
-                <option value="0">-</option>
-                <option value="1">APRIL</option>
-                <option value="2">MAY</option>
-                <option value="4">JUNE</option>
-            </select>-->
             <label>Line:</label>
             <select onchange="production()" id="linea">
                 <option value="0">--</option>
@@ -69,228 +65,148 @@
             <div class="old_ie_wrapper">
                 <table style=border-top:none;margin-top:0px;  class="prod-status"><!-- -->
                 <tbody>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009515</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
                         <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009709</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009709</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009515</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
                         <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009709</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009709</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009515</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
                         <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009709</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009709</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009515</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
                         <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009709</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009709</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009515</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
                         <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009709</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009709</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009515</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
                         <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
                     <tr onclick="alert('En progreso')">
@@ -299,12 +215,7 @@
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
                     <tr onclick="alert('En progreso')">
@@ -313,26 +224,16 @@
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
+                    <tr onclick="location.href='model-detail.html'">
                         <td class="model">30009515</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
                         <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
                     <tr onclick="alert('En progreso')">
@@ -341,12 +242,7 @@
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
                     <tr onclick="alert('En progreso')">
@@ -355,392 +251,10 @@
                         <td>92</td> 
                         <td>04/05/15</td>
                         <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
+                        <td><div id="progress"><div></div></div>
                         </td>
                     </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009515</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009515</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009515</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009515</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009515</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009515</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009515</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009515</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009515</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td>
-                            <progress max="100" value="10" class="progress-min">
-                                <div class="progress-bar">
-                                    <span style="width: 10%;">Progress: 10%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="50" class="progress-mid">
-                                <div class="progress-bar">  
-                                    <span style="width:50%;">Progress: 50%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td class="model">30009709</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td>
-                            <progress max="100" value="100">
-                                <div class="progress-bar">  
-                                    <span style="width:100%;">Progress: 100%</span>
-                                </div>
-                            </progress>
-                        </td>
-                    </tr>
+                    
                 </tbody>
             </table>
         <!--[if lte IE 9]>
