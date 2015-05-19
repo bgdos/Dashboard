@@ -10,18 +10,20 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.tooltipster.min.js"></script>
     <script src="js/funciones.js"></script>
+    <script src="js/login.js"></script>
 </head>
 <!--    translead-dashboard.esy.es-->
-<body onload="tooltip('.detail-wrap', 'Click here for details');">
+<body onload="start();tooltip('.detail-wrap', 'Click here for details');">
     <header>
+        
         <div><a href="main.html"><img src="images/logo.png" alt="Hyundai Translead" class="logo"></a></div>
         <div>
             <h2>Outsourcing Production Dashboard</h2>
         </div>
         <div class="user-data">
-            <a>Hello, Juan Salgado!</a>
-            <a href="#" class="option"><img src="images/gears2.png">Settings</a>
-            <a href="index.html" class="option"><img src="images/lock2.png">Log out</a>
+            <a>Hello, <span id="user-name"></span>!</a>
+            <a href="#" class="option"><img src="images/user.png">My Profile</a>
+            <a onclick="cerrarSesion();" class="option"><img src="images/lock2.png" >Log out</a>
             <a href="main.html" class="option"><img src="images/calendar2.png">Dashboard</a>
         </div>
     </header>
@@ -29,52 +31,107 @@
         <nav class="main-menu" >
             <ul>
                 <li><a href="main.html" class="active">Dashboard</a></li>
+                <li><a href="daily-report.html">Daily Report</a></li>
                 <li><a href="adminht.html">Administration</a></li>
             </ul>
         </nav>
         <div class="detail">
-            <div><h1 id="xx"><img class="tooltip" onclick="window.history.back()" src="images/NavigateLeft.png" title="Return">30009515 x 84 Units</h1></div>
-            <div class="detail-wrap" onclick="abrirPopUp()" style="cursor:pointer;">
+            <h1><img class="tooltip" onclick="window.history.back()" src="images/NavigateLeft.png" title="Return">30009515 x 84 Units
+                <button class="right button-detail" onclick='dailydetail();' title="View today production / deliveries">TODAY</button></h1>
+            <div class="detail-wrap" onclick="openPopup()" style="cursor:pointer;">
                 <h2 class="detail-sub">Rear Frame</h2>
-                <div><h2>Produced</h2><h2>50</h2></div>
-                <div><h2>Delivered</h2><h2>30</h2></div>
+                <div><h2>Produced</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infop"><span class="sumd">20 /</span> 30</h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infod"><span class="sumd">10 /</span> 15</h2>
+                </div>
             </div>
             <div class="detail-wrap">
                 <h2 class="detail-sub">Rear Bumper</h2>
-                <div><h2>Produced</h2><h2>50</h2></div>
-                <div><h2>Delivered</h2><h2>30</h2></div>
+                <div><h2>Produced</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infop"><span class="sumd">20 / </span> 30</h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infod"><span class="sumd">10 / </span> 15</h2>
+                </div>
             </div>
             <div class="detail-wrap">
                 <h2 class="detail-sub">Landing Gear</h2>
-                <div><h2>Produced</h2><h2>50</h2></div>
-                <div><h2>Delivered</h2><h2>30</h2></div>
+                <div><h2>Produced</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infop"><span class="sumd">20 / </span> 30</h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infod"><span class="sumd">10 / </span> 15</h2>
+                </div>
             </div>
             <div class="detail-wrap">
                 <h2 class="detail-sub">Large Slider</h2>
-                <div><h2>Produced</h2><h2>50</h2></div>
-                <div><h2>Delivered</h2><h2>30</h2></div>
+                <div><h2>Produced</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infop"><span class="sumd">20 / </span> 30</h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infod"><span class="sumd">10 / </span> 15</h2>
+                </div>
             </div>
             <div  class="detail-wrap">
                 <h2 class="detail-sub">Small Slider</h2>
-                <div><h2>Produced</h2><h2>50</h2></div>
-                <div><h2>Delivered</h2><h2>30</h2></div>
+                <div><h2>Produced</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infop"><span class="sumd">20 / </span> 30</h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infod"><span class="sumd">10 / </span> 15</h2>
+                </div>
             </div>
             <div class="detail-wrap">
                 <h2 class="detail-sub">X-Mem FWD</h2>
-                <div><h2>Produced</h2><h2>50</h2></div>
-                <div><h2>Delivered</h2><h2>30</h2></div>
+                <div><h2>Produced</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infop"><span class="sumd">20 / </span> 30</h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infod"><span class="sumd">10 / </span> 15</h2>
+                </div>
             </div>
             <div class="detail-wrap">
                 <h2 class="detail-sub">X-Mem Drop</h2>
-                <div><h2>Produced</h2><h2>50</h2></div>
-                <div><h2>Delivered</h2><h2>30</h2></div>
+                <div><h2>Produced</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infop"><span class="sumd">20 / </span> 30</h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infod"><span class="sumd">10 / </span> 15</h2>
+                </div>
+            </div>
+            <div class="detail-wrap">
+                <h2 class="detail-sub">Front Post</h2>
+                <div><h2>Produced</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infop"><span class="sumd">20 / </span> 30</h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum" style="display:none">Daily / Sum</span></h2>
+                    <h2 class="infod"><span class="sumd">10 / </span> 15</h2>
+                </div>
             </div>
         </div>
     </div>
 </body>
     <div class="popup">
         <div class="info">
-            <a class="cerrar" onclick="cerrarPopUp()"></a>
+            <a class="cerrar" onclick="closePopup()"></a>
             <h1>Sub-Assy Details</h1>
             <table class="details-sub">
                 <thead>
@@ -91,7 +148,7 @@
                         <td>Amex</td>
                         <td>4500482513</td>
                         <td>VT4100NSW-001-9417</td>
-                        <td>REAR FRAME SHA+SW+4H+2R+2667+102 NS</td>
+                        <td>REAR FRAME</td>
                         <td>84</td>
                     </tr>
                 </tbody>
