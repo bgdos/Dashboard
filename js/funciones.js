@@ -1,12 +1,75 @@
-/* desplegar programa de producccion */
-function production()
+/* 
+*   @Pagina
+*
+*
+*
+*
+*/
+// Dialogos
+var txt; //texto
+var imgprocessing = 'images/loading_anim.gif';  // imagen de progreso
+//var imgprocessing = 'images/wait_progress.gif';  // imagen de progreso
+var imgconfirmation = ''; // imagen de confirmacion
+
+/* Inicio de pagina */
+function start()
 {
+    loadpage();
+    validarUsuario();
+    if (window.location.href == 'http://localhost:8080/production_dashboard/main.html')
+    {
+       tablesort('.prod-status')
+    }
+    if (window.location.href == 'http://localhost:8080/production_dashboard/daily-report.html')
+    {
+        tablesort('.daily-detail');
+        fecha();
+    }
+    $('#user-name').text(sessionStorage.username + " " + sessionStorage.userlastname);
+    closeprocessing();
+}
+
+/* desplegar programa de producccion */
+function productionSchedule()
+{
+    txt = 'Processing . . .'; //texto
+    openprocessing();
+    progress();
     var date = new Date();
     var month = date.getMonth()+1;
     var year = date.getFullYear();
     date = year + "-0" + month;
-    var x = document.getElementById("month").value;
-    if (document.getElementById("linea").value == 1 && document.getElementById("month").value == '2015-04')
+    if (document.getElementById("linea").value == 1 && document.getElementById("month").value == '2015-05')
+        document.getElementById("production-status").style.display = "block";
+    else
+        document.getElementById("production-status").style.display = "none";
+    closeprocessing();
+
+}
+/* daily report */
+function fecha(){ 
+    var d = new Date();
+    var mes = d.getMonth()+1;
+    var dia = d.getDate();
+    if (mes < 10)
+        mes = '0' + mes;
+    if (dia < 10)
+        dia = '0' + dia;
+    var date = d.getFullYear() + '-' + mes + '-' + dia;
+    $('#date').val(date);
+}
+
+function Daily()
+{
+    var d = new Date();
+    var mes = d.getMonth()+1;
+    var dia = d.getDate();
+    if (mes < 10)
+        mes = '0' + mes;
+    if (dia < 10)
+        dia = '0' + dia;
+    var date = d.getFullYear() + '-' + mes + '-' + dia;
+    if (document.getElementById("subcontractor").value == 'AMEX' && document.getElementById("date").value == date)
         document.getElementById("production-status").style.display = "block";
     else
         document.getElementById("production-status").style.display = "none";
@@ -14,34 +77,65 @@ function production()
 }
 /* sub menus*/
 var sm; //variable del sub menu
+/* activar menu*/ 
 /* Agregar produccion al programa*/
-function scheduleAdd(o)//recibe el elemento
+function scheduleNew(e)//recibe el elemento
 {
-    ActivarSubMenu(o);
+    txt = "Processing ...";
+    openprocessing();
+    ActivarSubMenu(e);
     $(".title").text("Production Schedule Creation");
-    $( ".ajax" ).load( "schedule-input.html", function() {
-                      //alert( "Load was performed." );
-    });
+    $( ".ajax" ).load( "schedule-input.html");
+    closeprocessing();
 }
-function scheduleEdit(o){
-    ActivarSubMenu(o);
+/* Editar produccion al programa*/
+function scheduleEdit(e){
+    txt = "Processing ...";
+    openprocessing();
+    ActivarSubMenu(e);
     $(".title").html("Production Schedule Edit");
-    $( ".ajax" ).load( "schedule-edit.html", function() {
-      //alert( "Load was performed." );
-    });
+    $( ".ajax" ).load( "schedule-edit.html");
+    closeprocessing();
 }
-function subAssyAdd(o)
+/* Eliminar produccion al programa*/
+function scheduleDelete(e){
+    txt = "Processing ...";
+    openprocessing();
+    ActivarSubMenu(e);
+    $(".title").html("Production Schedule Edit");
+    $( ".ajax" ).load( "schedule-delete.html");
+    closeprocessing();
+}
+/* Agregar PO */
+function PONew(e)
 {
-    ActivarSubMenu(o);
-    $( ".ajax" ).load( "schedule-input.html", function() {
+    txt = "Processing ...";
+    openprocessing();
+    ActivarSubMenu(e);
+    $( ".ajax" ).load( "po-new.html", function() {
                       //alert( "Load was performed." );
     });
+    closeprocessing();
 }
-function subAssyEdit(o){
-    ActivarSubMenu(o);
-    $( ".ajax" ).load( "schedule-edit.html", function() {
+/* Editar PO */
+function POEdit(e){
+    txt = "Processing ...";
+    openprocessing();
+    ActivarSubMenu(e);
+    $( ".ajax" ).load( "po-edit.html", function() {
       //alert( "Load was performed." );
     });
+    closeprocessing();
+}
+/* Eliminar produccion al programa*/
+function PODelete(e){
+    txt = "Processing ...";
+    openprocessing();
+    ActivarSubMenu(e);
+    $( ".ajax" ).load( "po-delete.html", function() {
+      //alert( "Load was performed." );
+    });
+    closeprocessing();
 }
 function ActivarSubMenu(o){
     if (sm != null || sm != undefined)
@@ -55,13 +149,13 @@ function DesactivarSubMenu(){
 /* Acaba sub menu*/
 
 /* abrir ventana emergente */
-function abrirPopUp(){
+function openPopup(){
      $('.popup').fadeIn(200,function(){
             $('.info').animate({'top':'35%'},200);
         });
         return false;
 }
-function cerrarPopUp(){
+function closePopup(){
     $('.info').animate({'top':'-100%'},500,function(){
             $('.popup').fadeOut('fast');
         });
@@ -105,4 +199,28 @@ function progressBar(percent, element) {
 function tablesort(tabla) // se recibe el nombre de la tabla '.' para la clase '#' para el id
 {
     $(tabla).tablesorter();
+}
+/* cargar de pagina, informacion, etc*/
+function loadpage(){
+    txt = 'Loading . . .';
+    openprocessing();
+}
+function openprocessing(){
+    $('#msg-text').text(txt);
+    $('#msg-img').attr("src", imgprocessing); //cambiar a img
+     $('.processing').fadeIn(200,function(){
+            $('.message').animate({'top':'35%'},200);
+        });//.delay(1000).fadeOut("fast");
+        return false;
+}
+function closeprocessing(){
+    $('.message').animate({'top':'-100%'},500,function(){
+            $('.processing').fadeOut('fast');
+        });
+}
+/* Desplegar informacion diaria */
+function dailydetail()
+{
+    $('.sumd').toggle('slow');
+    $('.sum').slideToggle(500);
 }
