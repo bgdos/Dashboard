@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/tooltipster.css" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
+    <script src="js/funciones.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/jquery.tooltipster.min.js"></script>
 </head>
 <body>
     <header>
@@ -17,20 +21,27 @@
     </header>
     <div class="container">
         <div class="login">
-            <h4>SIGN IN</h4>
+            <h4>SIGN IN<span id="error-login"></span></h4>
             <hr>
-            <form>
+            <form id="frmLogin">
                 <fieldset>
-                    <p id="mensaje"></p>
                     <label>Your email address:</label>
-                    <input type="email" placeholder="Email address" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter your email.')">       
+                    <input type="email" name="user" placeholder="Email address" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter your email.')"  id="loginmail" title='Please enter your email'>                      <label id="lbl1" style="position:fixed; margin-left:23%; display:none;  color:red;">(*)</label>
                     <label>Password:</label>
-                    <input type="password" placeholder="Password" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter your password.')">
-                    <input type="submit" value="Sign in" formaction="main.html">
+                    <input type="password" name="password" placeholder="Password" id="loginpassword" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter your password.')"><label id="lbl2" style="position:fixed; margin-left:23%; margin-top:2.5%; color:red; display:none">(*)</label>
+                    <input class="btn-login" type="button" value="Sign in" onclick="obtenerToken();">
                 </fieldset> 
                 <a href="#">Forgot your password?</a>
             </form>
         </div>
     </div>
 </body>
+    <div class="processing">
+        <center>
+            <div class="message">
+                <img id="msg-img">
+                <p id="msg-text"></p>
+            <div>
+        </center>
+    </div>
 </html>
