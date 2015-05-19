@@ -10,42 +10,46 @@
     <script src="js/progress.js"></script>
     <script src="js/jquery.tablesorter.js"></script>
     <script src="js/funciones.js"></script>
+    <script src="js/login.js"></script>
 </head>
 <!--    translead-dashboard.esy.es-->
-<body onload="progress(); tablesort('.prod-status')">
+<body onload="start();">
     <header>
         <div><a href="main.html"><img src="images/logo.png" alt="Hyundai Translead" class="logo"></a></div>
         <div>
             <h2>Outsourcing Production Dashboard</h2>
         </div>
         <div class="user-data">
-            <a>Hello, Juan Salgado!</a>
-            <a href="#" class="option"><img src="images/gears2.png">Settings</a>
-            <a href="index.html" class="option"><img src="images/lock2.png">Log out</a>
+            <a>Hello, <span id="user-name"></span>!</a>
+            <a href="#" class="option"><img src="images/user.png">My Profile</a>
+            <a onclick="cerrarSesion();" class="option"><img src="images/lock2.png" >Log out</a>
             <a href="main.html" class="option"><img src="images/calendar2.png">Dashboard</a>
         </div>
     </header>
     <div class="container">
         <nav class="main-menu">
             <ul>
-                <li><a href="#" class="active">Dashboard</a></li>
-                <li><a href="adminht.html">Administration</a></li>
+                <li id="menuDashboard"><a href="#" class="active">Dashboard</a></li>
+                <li id="menuDaily"><a href="daily-report.html">Daily Report</a></li>
+                <li id="menuAdmin"><a href="adminht.html">Administration</a></li>
             </ul>
         </nav>
         <div class="filter">
-            <h4>Monitoring Filters2</h4>
-            <hr>
-            <label>Month:</label>
-            <input type="month" min="2015-04" value="2015-04" id="month" onblur="production()">
-            <label>Line:</label>
-            <select onchange="production()" id="linea">
-                <option value="0">--</option>
-                <option value="1">A</option>
-                <option value="2">B</option>
-                <option value="3">C</option>
-                <option value="4">H</option>
-            </select>
-            <input type="button" onclick="production()" value="Search">
+            <div class="filter-wrap">
+                <h4>Filters</h4>
+                <hr>
+                <label>Month:</label>
+                <input type="month" min="2015-05" value="2015-05" id="month" onblur="productionSchedule()">
+                <label>Line:</label>
+                <select onchange="productionSchedule()" id="linea">
+                    <option value="0">--</option>
+                    <option value="1">A</option>
+                    <option value="2">B</option>
+                    <option value="3">C</option>
+                    <option value="4">H</option>
+                </select>
+                <input type="button" onclick="productionSchedule()" value="Search">
+            </div>
         </div>
         <div id="production-status">
             <table  class="prod-status">
@@ -53,6 +57,7 @@
                 <thead>
                     <tr>
                         <th>Model</th>
+                        <th>Owner</th>
                         <th>Line</th>
                         <th>Lot</th>
                         <th>S. Date</th>
@@ -67,6 +72,7 @@
                 <tbody>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009515</td>
+                        <td>Fedex</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
@@ -76,6 +82,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009709</td>
+                        <td>UPS</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -85,6 +92,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009709</td>
+                        <td>Walmart</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -94,6 +102,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009515</td>
+                        <td>Pepsi</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
@@ -103,6 +112,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009709</td>
+                        <td>Fedex</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -112,6 +122,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009709</td>
+                        <td>UPS</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -121,6 +132,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009515</td>
+                        <td>Walmart</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
@@ -130,6 +142,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009709</td>
+                        <td>Coca-Cola</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -139,6 +152,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009709</td>
+                        <td>Fedex</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -148,6 +162,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009515</td>
+                        <td>UPS</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
@@ -157,6 +172,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009709</td>
+                        <td>Walmart</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -166,6 +182,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009709</td>
+                        <td>Fedex</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -175,6 +192,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009515</td>
+                        <td>Fedex</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
@@ -184,6 +202,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009709</td>
+                        <td>Coca-Cola</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -193,6 +212,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009709</td>
+                        <td>Pepsi</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -202,6 +222,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009515</td>
+                        <td>Fedex</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
@@ -211,6 +232,7 @@
                     </tr>
                     <tr onclick="alert('En progreso')">
                         <td>30009709</td>
+                        <td>Fedex</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -220,6 +242,7 @@
                     </tr>
                     <tr onclick="alert('En progreso')">
                         <td>30009709</td>
+                        <td>Fedex</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -229,6 +252,7 @@
                     </tr>
                     <tr onclick="location.href='model-detail.html'">
                         <td>30009515</td>
+                        <td>Fedex</td>
                         <td>A</td> 
                         <td>84</td>
                         <td>04/01/15</td>
@@ -238,6 +262,7 @@
                     </tr>
                     <tr onclick="alert('En progreso')">
                         <td>30009709</td>
+                        <td>UPS</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -247,6 +272,7 @@
                     </tr>
                     <tr onclick="alert('En progreso')">
                         <td>30009709</td>
+                        <td>Fedex</td>
                         <td>A</td> 
                         <td>92</td> 
                         <td>04/05/15</td>
@@ -263,4 +289,12 @@
         </div>
     </div>
 </body>
+    <div class="processing">
+        <center>
+            <div class="message">
+                <img id="msg-img">
+                <p id="msg-text"></p>
+            <div>
+        </center>
+    </div>
 </html>
