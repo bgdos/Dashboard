@@ -8,25 +8,27 @@
     <link href="css/style.css" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
     <script src="js/funciones.js"></script>
+    <script src="js/login.js"></script>
 </head>
 <!--    translead-dashboard.esy.es-->
-<body>
+<body onload="start()">
     <header>
         <div><a href="main.html"><img src="images/logo.png" alt="Hyundai Translead" class="logo"></a></div>
         <div>
             <h2>Outsourcing Production Dashboard</h2>
         </div>
         <div class="user-data">
-            <a>Hello, Juan Salgado!</a>
-            <a href="#" class="option"><img src="images/gears2.png">Settings</a>
-            <a href="index.html" class="option"><img src="images/lock2.png">Log out</a>
-            <a href="#" class="option"><img src="images/calendar2.png">Dashboard</a>
+            <a>Hello, <span id="user-name"></span>!</a>
+            <a href="#" class="option"><img src="images/user.png">My Profile</a>
+            <a onclick="cerrarSesion();" class="option"><img src="images/lock2.png" >Log out</a>
+            <a href="main.html" class="option"><img src="images/calendar2.png">Dashboard</a>
         </div>
     </header>
     <div class="container">
         <nav class="main-menu">
             <ul>
-                <li><a href="main.html">Schedule</a></li>
+                <li><a href="main.html">Dashboard</a></li>
+                <li><a href="daily-report.html" >Daily Report</a></li>
                 <li><a href="#" class="active">Administration</a></li>
             </ul>
         </nav>
@@ -34,16 +36,16 @@
             <ul>
                 <li>Schedule
                     <ul>
-                        <li onclick="scheduleAdd()">Add</li>
-                        <li onclick="scheduleEdit()">Edit</li>
-                        <li>Delete</li>
+                        <li onclick="scheduleNew(this)">New</li>
+                        <li onclick="scheduleEdit(this)">Edit</li>
+                        <li onclick="scheduleDelete(this)">Delete</li>
                     </ul>
                 </li>
-                <li>Sub-Assy
+                <li>Purchase Order
                     <ul>
-                        <li>Add</li>
-                        <li>Edit</li>
-                        <li>Delete</li>
+                        <li onclick="PONew(this)">New</li>
+                        <li onclick="POEdit(this)">Edit</li>
+                        <li onclick="PODelete(this)">Delete</li>
                     </ul>
                 </li>
                 <li>Production
@@ -55,9 +57,16 @@
                 </li>
                 <li>Deliveries
                     <ul>
-                        <li>Add</li>
+                        <li>New</li>
                         <li>Confirm</li>
                         <li>Edit</li>
+                    </ul>
+                </li>
+                <li>Users
+                    <ul>
+                        <li>New</li>
+                        <li>Edit</li>
+                        <li>Delete</li>
                     </ul>
                 </li>
             </ul>
@@ -66,4 +75,12 @@
         </div>
     </div>    
 </body>
+    <div class="processing">
+        <center>
+            <div class="message">
+                <img id="msg-img">
+                <p id="msg-text"></p>
+            <div>
+        </center>
+    </div>
 </html>
