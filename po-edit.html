@@ -2,16 +2,16 @@
     <div class="filter f2">
         <h4 class="title">Purchase Order (Edit)</h4>
         <hr>
-        <input type="number" placeholder="Purchase order">
-        <input type="button" value="Find"> 
-        <input type="button" value="save">
+        <input type="number" placeholder="Purchase order" id="po-number" class="ml-10"  min="0">
+        <input type="button" onclick="purchaseOrder();" value="Find"> 
+        <input type="button" onclick="editPo()" value="save"  class="btn-save">
     </div>
     <table>
         <thead>
             <tr>
                 <th>No.</th>
                 <th>PO</th>
-                <th>Material</th>
+                <th>SAP No.</th>
                 <th>Description</th>
                 <th>Qty</th>
                 <th>Model</th>
@@ -19,25 +19,9 @@
                 <th>Date</th>
             </tr>
         </thead>
-        <!--[if lte IE 9]>
-        </table>
-    <div class="old_ie_wrapper">
-        <table style=border-top:none;margin-top:0px;><!-- -->
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td><input type="number" value="45004525369"></td>
-                <td><input type="text" value="20060399"></td>
-                <td><input type="text" value="FRONT POST"></td>
-                <td><input type="number" value="20"></td>
-                <td><select id="model"><option>30009521</option></select></td>
-                <td><select id="line"><option>A</option></select></td>
-                <td><input type="date" value="2015-05-17"></td> 
+        <tbody id="purchase-edit">
+            <tr> 
             </tr>
         </tbody>
     </table>
-<!--[if lte IE 9]>
-    </div>
-<!--<![endif]-->
-    </div>
 </content>
