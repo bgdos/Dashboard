@@ -1,0 +1,50 @@
+<content>
+    <div class="filter f2">
+        <h4 class="title">User (Edit)</h4>
+		<input type="email" placeholder="Email" id="f-email" class="ml-10">  
+		<input type="button" onclick="clickDelivery()" value="Find"> <br> 
+        <hr>
+		<label class="margin-left user-req">Edit the desired information below:</label>   
+		<div class="user-menu">
+			<div id="inputs">
+				<label>Name: </label>
+				<input type="text" name="name" required><br><br>
+				<label>Last Name: </label>
+				<input type="text" name="lastName" required><br><br>
+				<label>Email: </label>
+				<input type="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"><br><br>
+				<label>Password: </label>
+				<input type="password" name="password" pattern=".{5,10}" required><br><br>
+				<label>Confirm: </label>
+				<input type="password" name="confirm" pattern=".{5,10}" required><br><br>
+				<label>Type: </label>
+				<select  required>
+					<option value="">--------</option>
+					<option value="1">General</option>
+					<option value="2">Administrator General</option>
+					<option value="3">Administrator Subcontractor</option>
+					<option value="4">Administrator Outsourcing</option>
+				</select><br><br>
+				<label>Subcontractor: </label>
+				<select  required>
+					<option value="">--------</option>
+                    <option value="1">AMEX</option>
+                    <option value="2">ATA</option>
+                    <option value="3">CLAVE</option>    
+                    <option value="4">FETASA</option>
+                    <option value="5">GLUZ</option>
+                    <option value="6">HJE</option>
+                    <option value="7">INMERGALV</option>
+                    <option value="8">INMERMERK</option>
+                    <option value="9">JEMPLASTIC</option>
+                    <option value="10">NFL</option>
+                    <option value="11">PROFES</option>
+                    <option value="12">SANWON</option>
+                    <option value="13">SMART FINISH</option>
+                    <option value="14">YIENT</option>
+				</select><br><br>
+			</div>
+			<input type="button" value="Save" onclick="validation();" class="btn-save">
+		</div> 
+	</div>
+</content>
