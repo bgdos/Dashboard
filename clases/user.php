@@ -116,6 +116,21 @@
                 $this->subcontractorId = $argumentos[5];
             }
 		}
+        public function updatePassword($value, $password)
+        {
+            if (isset($value) & isset($password))
+            {
+                $email = $value;
+				parent::abrirConexion();
+				$instruccion = "UPDATE users SET password=SHA1(?) WHERE email = ?";
+				$comando = parent::$conexion -> prepare($instruccion);
+				$comando -> bind_param('ss', $password, $email);
+				$resultado = $comando -> execute();
+				mysqli_stmt_close($comando);
+				parent::cerrarConexion();
+				return $resultado;
+            }
+        }
 		
 	}
 ?>
