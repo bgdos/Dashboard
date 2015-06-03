@@ -3,39 +3,30 @@
         <h4 class="title">Production Schedule (Delete)</h4>
         <hr>
         <label class="margin-left">Select Month:</label>
-        <input type="month">
+        <input type="month" id="month" onchange="productionSchedule()">
         <label>Select Line:</label>
-        <select required><option value="">--</option><option value="A" >A</option><option value="B">B</option><option value="C">C</option><option value="H">H</option></select>
-        <input type="submit" value="Find"><input type="button" value="Save" class="schedule-save">
+        <select id="line" onchange="productionSchedule()"  required>
+			<option value="">--</option>
+			<option value="1" >A</option>
+			<option value="2">B</option>
+			<option value="3">C</option><option value="H">H</option></select>
+        <input type="submit" value="Find" onclick="productionSchedule()">
+		<input type="button" onclick="ScheduleDelete()" value="Delete Checked" class="right">
     </div>
+	
     <table>
         <thead>
             <tr>
                 <th>No.</th>
-                <th><input type="checkbox"></th>
+                <th><input id="checkSchedule" type="checkbox" onclick="checkAll()" ></th>
                 <th>Model</th>
                 <th>Owner</th>
                 <th>Lot</th>
+				<th>Line</th>
                 <th>S. Date</th>
             </tr>
         </thead>
-        <!--[if lte IE 9]>
-        </table>
-    <div class="old_ie_wrapper">
-        <table style=border-top:none;margin-top:0px;><!-- -->
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td><input type="checkbox" checked="true"></td>
-                <td><input type="number" value="30009524"></td>
-                <td><input type="text" value="Pepsi"></td>
-                <td><input type="number" value="20"></td>
-                <td><input type="date" value="2015-05-10"></td> 
-            </tr>
+        <tbody id="schedule-edit">
         </tbody>
     </table>
-<!--[if lte IE 9]>
-    </div>
-<!--<![endif]-->
-    </div>
 </content>
