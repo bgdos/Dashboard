@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
     <link href="css/style.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.tablesorter.js"></script>
+    <script src="js/jquery.tooltipster.min.js"></script>
     <script src="js/funciones.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/servicios.js"></script>
 </head>
-<!--    translead-dashboard.esy.es-->
 <body onload="start()">
     <header>
         <div><a href="main.html"><img src="images/logo.png" alt="Hyundai Translead" class="logo"></a></div>
@@ -20,7 +22,7 @@
         </div>
         <div class="user-data">
             <a>Hello, <span id="user-name"></span>!</a>
-            <a href="#" class="option"><img src="images/user.png">My Profile</a>
+            <a href="javascript:updateProfile();" class="option"><img src="images/user.png">My Profile</a>
             <a onclick="cerrarSesion();" class="option"><img src="images/lock2.png" >Log out</a>
             <a href="main.html" class="option"><img src="images/calendar2.png">Dashboard</a>
         </div>
@@ -28,9 +30,9 @@
     <div class="container">
         <nav class="main-menu">
             <ul>
-                <li><a href="main.html">Dashboard</a></li>
-                <li><a href="daily-report.html" class="active">Daily Report</a></li>
-                <li><a href="adminht.html">Administration</a></li>
+                <li id="menuDashboard"><a href="main.html">Dashboard</a></li>
+                <li id="menuDaily"><a href="#" class="active">Daily Report</a></li>
+                <li id="menuAdmin"><a href="adminht.html">Administration</a></li>
             </ul>
         </nav>
         <div class="filter">
@@ -38,30 +40,30 @@
                 <h4>Filters</h4>
                 <hr>
                 <label>Date:</label>
-                <input type="date" min="2015-04-15" id="date" onblur="Daily()">
+                <input type="date" min="2015-05-15" id="date" onchange="onclickDailyReport()">
                 <label>Subcontractor:</label>
-                <select onchange="Daily()" id="subcontractor">
-                    <option value="">----------------------</option>
-                    <option value="AMEX">AMEX</option>
-                    <option value="ATA">ATA</option>
-                    <option value="CLAVE">CLAVE</option>    
-                    <option value="FETASA">FETASA</option>
-                    <option value="GLUZ">GLUZ</option>
-                    <option value="HJE">HJE</option>
-                    <option value="INMERGALV">INMERGALV</option>
-                    <option value="INMER">INMERMERK</option>
-                    <option value="0000103097">JEMPLASTIC</option>
-                    <option value="NFL">NFL</option>
-                    <option value="PROFES">PROFES</option>
-                    <option value="SANWON">SANWON</option>
-                    <option value="0000101640">SMART FINISH</option>
-                    <option value="YIENT">YIENT</option>
+                <select onchange="onclickDailyReport()"  id="subcontractor">
+                    <option value="0">--------</option>
+                    <option value="1">AMEX</option>
+                    <option value="2">ATA</option>
+                    <option value="3">CLAVE</option>    
+                    <option value="4">FETASA</option>
+                    <option value="5">GLUZ</option>
+                    <option value="6">HJE</option>
+                    <option value="7">INMERGALV</option>
+                    <option value="8">INMERMERK</option>
+                    <option value="9">JEMPLASTIC</option>
+                    <option value="10">NFL</option>
+                    <option value="11">PROFES</option>
+                    <option value="12">SANWON</option>
+                    <option value="13">SMART FINISH</option>
+                    <option value="14">YIENT</option>
                 </select>
-                <input type="button" onclick="Daily()" value="Search">
+                <input type="button" onclick="onclickDailyReport()" value="Search">
             </div>
         </div>
         <div id="production-status">
-            <table class="aprod-status daily-detail">
+            <table class="daily-detail">
                 <caption>Production delivery progress</caption>
                 <thead>
                     <tr>
@@ -78,136 +80,9 @@
                         
                     </tr>
                 </thead>
-                <!--[if lte IE 9]>
-                </table>
-            <div class="old_ie_wrapper">
-                <table style=border-top:none;margin-top:0px;  class="prod-status"><!-- -->
-                <tbody>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>AMEX</td>
-                        <td>30009709</td> 
-                        <td>A</td> 
-                        <td>VT4100NSW-001-9709</td> 
-                        <td>REAR FRAME</td>
-                        <td>100</td>
-                        <td>50</td> 
-                        <td>40</td> 
-                        <td>55</td> 
-                        <td>42</td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>AMEX</td>
-                        <td>30009417</td> 
-                        <td>A</td> 
-                        <td>VT4100NSW-001-9417</td> 
-                        <td>REAR FRAME</td>
-                        <td>100</td>
-                        <td>30</td> 
-                        <td>20</td> 
-                        <td>38</td> 
-                        <td>40</td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>AMEX</td>
-                        <td>30009709</td> 
-                        <td>A</td> 
-                        <td>VT4100NSW-001-9417</td> 
-                        <td>REAR FRAME</td>
-                        <td>100</td>
-                        <td>60</td> 
-                        <td>43</td> 
-                        <td>75</td> 
-                        <td>52</td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>AMEX</td>
-                        <td>30009805</td> 
-                        <td>A</td> 
-                        <td>VT4100NSW-001-9805</td> 
-                        <td>REAR FRAME</td>
-                        <td>100</td>
-                        <td>45</td> 
-                        <td>10</td> 
-                        <td>60</td> 
-                        <td>20</td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>AMEX</td>
-                        <td>30009713</td> 
-                        <td>A</td> 
-                        <td>VT4100NSW-001-9713</td> 
-                        <td>REAR FRAME</td>
-                        <td>100</td>
-                        <td>90</td> 
-                        <td>80</td> 
-                        <td>100</td> 
-                        <td>94</td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>AMEX</td>
-                        <td>30009709</td> 
-                        <td>A</td> 
-                        <td>VT4400NXX-029-01</td> 
-                        <td>REAR BUMPER</td>
-                        <td>100</td>
-                        <td>50</td> 
-                        <td>40</td> 
-                        <td>50</td> 
-                        <td>40</td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>AMEX</td>
-                        <td>30009417</td> 
-                        <td>A</td> 
-                        <td>VT4400NXX-029-01</td> 
-                        <td>REAR BUMPER</td>
-                        <td>100</td>
-                        <td>45</td> 
-                        <td>45</td> 
-                        <td>80</td> 
-                        <td>80</td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>AMEX</td>
-                        <td>30009709</td> 
-                        <td>A</td> 
-                        <td>VR4400NXX-201-02</td> 
-                        <td>REAR BUMPER</td>
-                        <td>100</td>
-                        <td>17</td> 
-                        <td>12</td> 
-                        <td>31</td> 
-                        <td>18</td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>AMEX</td>
-                        <td>30009805</td> 
-                        <td>A</td> 
-                        <td>VR4400NXX-201-01</td> 
-                        <td>REAR BUMPER</td>
-                        <td>100</td>
-                        <td>21</td> 
-                        <td>20</td> 
-                        <td>29</td> 
-                        <td>25</td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>AMEX</td>
-                        <td>30009713</td> 
-                        <td>A</td> 
-                        <td>VT4400NXX-029-01</td> 
-                        <td>REAR BUMPER</td>
-                        <td>100</td>
-                        <td>10</td> 
-                        <td>5</td> 
-                        <td>15</td> 
-                        <td>10</td>
-                    </tr>
+                <tbody id="daily-reportDetail">
                 </tbody>
             </table>
-        <!--[if lte IE 9]>
-            </div>
-        <!--<![endif]-->
         </div>
     </div>
 </body>
@@ -219,4 +94,12 @@
             <div>
         </center>
     </div>
+	<div class="popup">
+        <div class="info pass">
+            <a class="cerrar" onclick="closePopup()"></a>
+            <h1 id="popheader"><span id="head-mess"></span></h1>
+            <div id="pop-message">
+            </div>
+        </div>
+	</div>
 </html>
