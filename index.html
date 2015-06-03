@@ -12,7 +12,7 @@
     <script src="js/login.js"></script>
     <script src="js/jquery.tooltipster.min.js"></script>
 </head>
-<body>
+<body onload="index();">
     <header>
         <div><a href="#"><img src="images/logo.png" alt="Hyundai Translead" class="logo"></a></div>
         <div>
@@ -26,12 +26,12 @@
             <form id="frmLogin">
                 <fieldset>
                     <label>Your email address:</label>
-                    <input type="email" name="user" placeholder="Email address" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter your email.')"  id="loginmail" title='Please enter your email'>                      <label id="lbl1" style="position:fixed; margin-left:23%; display:none;  color:red;">(*)</label>
+                    <input type="email" name="user" placeholder="Email address" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter your email.')"  id="loginmail" title='Please enter your email'>
                     <label>Password:</label>
-                    <input type="password" name="password" placeholder="Password" id="loginpassword" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter your password.')"><label id="lbl2" style="position:fixed; margin-left:23%; margin-top:2.5%; color:red; display:none">(*)</label>
-                    <input class="btn-login" type="button" value="Sign in" onclick="obtenerToken();">
+                    <input type="password" name="password" placeholder="Password" id="loginpassword" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter your password.')">
+                    <input id="btnlgn" class="btn-login" type="button" value="Sign in" onclick="obtenerToken();">
                 </fieldset> 
-                <a href="#">Forgot your password?</a>
+                <a href="Javascript:openPopup()">Forgot your password?</a>
             </form>
         </div>
     </div>
@@ -44,4 +44,16 @@
             <div>
         </center>
     </div>
+    <div class="popup">
+        <div class="info pass">
+            <a class="cerrar" onclick="closePopup()"></a>
+            <h1 id="popheader"><span id="head-mess">Forgot your password?</span></h1>
+            <div id="pop-message">
+                <form action="servicios/getpassword.php" method="post" id="form-pass">
+                    <input type="email" placeholder="Email address" name="email" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter your email.')">
+                    <input type="submit" value="Send" onsubmit="return validateForm()">
+                </form>
+            </div>
+        </div>
+	</div>
 </html>
