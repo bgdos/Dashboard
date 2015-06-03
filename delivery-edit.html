@@ -1,0 +1,32 @@
+<content class="po">
+    <div class="filter f2">
+        <h4 class="title">Delivery (Edit)</h4>
+        <hr>
+		<label class="margin-left">Packing No.</label>
+        <input type="text" placeholder="Packing number" id="po-no">  
+		<input type="button" onclick="clickDelivery()" value="Find">   
+		<input type="button" value="Save" onclick="" class="btn-save">
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th><input id="checkSchedule"  onclick="checkAll()" type="checkbox"></th>
+                <th>PO</th>
+                <th>SAP No.</th>
+                <th>Description</th>
+                <th>PO Qty</th>
+                <th>Line</th>
+                <th>Date</th>
+				<th>Prod. Qty</th>
+				<th>Deliv. Qty</th>
+				<th>Max Qty</th>
+				<th>Pack No.</th>
+				<th>Pack Qty</th>
+            </tr>
+        </thead>
+        <tbody id="model-pos">
+            <tr>
+            </tr>
+        </tbody>
+    </table>
+</content>
