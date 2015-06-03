@@ -2,25 +2,27 @@
 <html>
 <head>
     <title>Outsourcing Production Dashboard | Hyundai Translead</title>
-    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.tooltipster.min.js"></script>
     <script src="js/funciones.js"></script>
     <script src="js/login.js"></script>
+	<script src="js/servicios.js"></script>
 </head>
-<!--    translead-dashboard.esy.es-->
 <body onload="start()">
     <header>
-        <div><a href="main.html"><img src="images/logo.png" alt="Hyundai Translead" class="logo"></a></div>
+        <div><a href="main.html"><img src="images/logo.png" alt="Hyundai Translead" class="logo"/></a></div>
         <div>
             <h2>Outsourcing Production Dashboard</h2>
         </div>
         <div class="user-data">
             <a>Hello, <span id="user-name"></span>!</a>
-            <a href="#" class="option"><img src="images/user.png">My Profile</a>
-            <a onclick="cerrarSesion();" class="option"><img src="images/lock2.png" >Log out</a>
+            <a href="javascript:updateProfile();" class="option"><img src="images/user.png"/>My Profile</a>
+            <a onclick="cerrarSesion();" class="option"><img src="images/lock2.png" />Log out</a>
             <a href="main.html" class="option"><img src="images/calendar2.png">Dashboard</a>
         </div>
     </header>
@@ -44,29 +46,28 @@
                 <li>Purchase Order
                     <ul>
                         <li onclick="PONew(this)">New</li>
-                        <li onclick="POEdit(this)">Edit</li>
-                        <li onclick="PODelete(this)">Delete</li>
+                        <li id="li-po-edit" onclick="POEdit(this)">Edit</li>
+                        <li id="li-po-delete" onclick="PODelete(this)">Delete</li>
                     </ul>
                 </li>
                 <li>Production
                     <ul>
-                        <li>Confirm</li>
-                        <li>Edit</li>
-                        <li>Delete</li>
+                        <li id="li-production-confirm" onclick="ProductionConfirm(this)">Confirm</li>
+                        <li id="li-production-adjust" onclick="ProductionAdjust(this)">Adjust</li>
                     </ul>
                 </li>
-                <li>Deliveries
+                <li>Delivery
                     <ul>
-                        <li>New</li>
-                        <li>Confirm</li>
-                        <li>Edit</li>
+                        <li id="li-delivery-new" onclick="DeliveryNew(this)">New</li>
+                        <li id="li-delivery-confirm" onclick="DeliveryConfirm(this)">Confirm</li>
+                        <li id="li-delivery-edit" onclick="DeliveryEdit(this)">Edit</li>
                     </ul>
                 </li>
-                <li>Users
+                <li>User
                     <ul>
-                        <li>New</li>
-                        <li>Edit</li>
-                        <li>Delete</li>
+                        <li id="li-user-new" onclick="UserNew(this)">New</li>
+                        <li id="li-user-edit" onclick="UserEdit(this)">Edit</li>
+                        <li id="li-user-delete" onclick="UserDelete(this)">Delete</li>
                     </ul>
                 </li>
             </ul>
@@ -78,9 +79,17 @@
     <div class="processing">
         <center>
             <div class="message">
-                <img id="msg-img">
+				<img id="msg-img"/>
                 <p id="msg-text"></p>
-            <div>
+			</div>
         </center>
     </div>
+	<div class="popup">
+        <div class="info pass">
+            <a class="cerrar" onclick="closePopup()"></a>
+            <h1 id="popheader"><span id="head-mess"></span></h1>
+            <div id="pop-message">
+            </div>
+        </div>
+	</div>
 </html>
