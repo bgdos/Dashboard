@@ -11,6 +11,7 @@
     <script src="js/jquery.tablesorter.js"></script>
     <script src="js/funciones.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/servicios.js"></script>
 </head>
 <!--    translead-dashboard.esy.es-->
 <body onload="start();">
@@ -21,7 +22,7 @@
         </div>
         <div class="user-data">
             <a>Hello, <span id="user-name"></span>!</a>
-            <a href="#" class="option"><img src="images/user.png">My Profile</a>
+            <a href="javascript:updateProfile();" class="option"><img src="images/user.png">My Profile</a>
             <a onclick="cerrarSesion();" class="option"><img src="images/lock2.png" >Log out</a>
             <a href="main.html" class="option"><img src="images/calendar2.png">Dashboard</a>
         </div>
@@ -39,16 +40,16 @@
                 <h4>Filters</h4>
                 <hr>
                 <label>Month:</label>
-                <input type="month" min="2015-05" value="2015-05" id="month" onblur="productionSchedule()">
+                <input type="month" min="2015-05" value="2015-05" id="month" onchange="productionSchedule()">
                 <label>Line:</label>
-                <select onchange="productionSchedule()" id="linea">
-                    <option value="0">--</option>
+                <select onchange="productionSchedule()" id="line">
+                    <option value="">--</option>
                     <option value="1">A</option>
                     <option value="2">B</option>
                     <option value="3">C</option>
                     <option value="4">H</option>
                 </select>
-                <input type="button" onclick="productionSchedule()" value="Search">
+                <input type="button" onclick="productionSchedule()" value="Refresh">
             </div>
         </div>
         <div id="production-status">
@@ -69,217 +70,7 @@
                 </table>
             <div class="old_ie_wrapper">
                 <table style=border-top:none;margin-top:0px;  class="prod-status"><!-- -->
-                <tbody>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009515</td>
-                        <td>Fedex</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009709</td>
-                        <td>UPS</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009709</td>
-                        <td>Walmart</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009515</td>
-                        <td>Pepsi</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009709</td>
-                        <td>Fedex</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009709</td>
-                        <td>UPS</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009515</td>
-                        <td>Walmart</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009709</td>
-                        <td>Coca-Cola</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009709</td>
-                        <td>Fedex</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009515</td>
-                        <td>UPS</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009709</td>
-                        <td>Walmart</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009709</td>
-                        <td>Fedex</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009515</td>
-                        <td>Fedex</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009709</td>
-                        <td>Coca-Cola</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009709</td>
-                        <td>Pepsi</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009515</td>
-                        <td>Fedex</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td>30009709</td>
-                        <td>Fedex</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td>30009709</td>
-                        <td>Fedex</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="location.href='model-detail.html'">
-                        <td>30009515</td>
-                        <td>Fedex</td>
-                        <td>A</td> 
-                        <td>84</td>
-                        <td>04/01/15</td>
-                        <td>Working</td>  
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td>30009709</td>
-                        <td>UPS</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
-                    <tr onclick="alert('En progreso')">
-                        <td>30009709</td>
-                        <td>Fedex</td>
-                        <td>A</td> 
-                        <td>92</td> 
-                        <td>04/05/15</td>
-                        <td>Complete</td> 
-                        <td><div id="progress"><div></div></div>
-                        </td>
-                    </tr>
+                <tbody id="prod-mod">
                     
                 </tbody>
             </table>
@@ -297,4 +88,12 @@
             <div>
         </center>
     </div>
+	<div class="popup">
+        <div class="info pass">
+            <a class="cerrar" onclick="closePopup()"></a>
+            <h1 id="popheader"><span id="head-mess"></span></h1>
+            <div id="pop-message">
+            </div>
+        </div>
+	</div>
 </html>
