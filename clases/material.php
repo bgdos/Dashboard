@@ -128,6 +128,47 @@
                     $this->poId = new Po();
 				}	
 			}
+            if(func_num_args() == 2)
+			{
+                $id = $argumentos[0];
+				//abrir conexión a servidor
+				parent::abrirConexion();
+				//comando de SQL
+				$instruccion = "SELECT number, description, qty, model_Id, po_Id FROM material WHERE model_Id =? AND description = ?";
+				//comando
+				$comando = parent::$conexion->prepare($instruccion);
+				//parámetros
+				$comando->bind_param('is', $argumentos[0], $argumentos[1]);
+				//ejecutar comando
+				$comando->execute();
+				//resultado
+				$comando->bind_result($number, $description, $qty, $modelId, $poId);
+				//leer datos 
+				$encontro = $comando->fetch();
+				//cerrar comando
+				mysqli_stmt_close($comando);
+				//cerrar conexion
+				parent::cerrarConexion();
+				//pasar values a los atributos
+				if($encontro)
+				{
+					$this->id = $id;
+                    $this->number = $number;
+                    $this->description = $description;
+                    $this->qty = $qty;
+                    $this->modelId = new Model($modelId);
+                    $this->poId = new Po($poId);
+				}
+				else
+				{
+					$this->id = 0;
+                    $this->number = '';
+                    $this->description = '';
+                    $this->qty = 0;
+                    $this->modelId = new Model();
+                    $this->poId = new Po();
+				}	
+			}
 			//se recibió dos argumentos, se construye el objeto con los argumentos recibidos
 			if(func_num_args() == 5)
 			{
@@ -139,6 +180,39 @@
                 $this->modelId = new Model($argumentos[3]);
                 $this->poId = new Po($argumentos[4]);
 			}
+		}
+		function savePo($instruccion)// recibe una cadena de texto con uno o varios registros.
+		{
+			parent::abrirConexion();
+			if (parent::$conexion -> multi_query($instruccion)=== true)
+				echo '{ "status" : 0, "message" : "Data saved successfully." }';
+			else 
+				echo '{ "status" : 1, "message" : "Error on data saving." }';
+			parent::cerrarConexion();
+		}
+		function deletePo($id)
+		{
+			$instruccion = "DELETE FROM material WHERE id = ? AND (select Count(material_id) FROM produced WHERE material_id = ?) = 0 AND (select Count(material_id) FROM delivery WHERE material_id = ?) = 0;";
+			parent::abrirConexion();
+			$comando = parent::$conexion->prepare($instruccion);
+			$comando->bind_param('iii', $id, $id, $id);
+			$comando->execute();
+			if ($comando->affected_rows > 0)
+				$resultado = true;
+			else
+				$resultado = false;
+			mysqli_stmt_close($comando);
+			parent::cerrarConexion();
+			return $resultado;
+		}
+		function editPo($instruccion)// recibe una cadena de texto con uno o varios registros.
+		{
+			parent::abrirConexion();
+			if (parent::$conexion -> multi_query($instruccion)=== true)
+				echo '{ "status" : 0, "message" : "Data updated successfully." }';
+			else 
+				echo '{ "status" : 1, "message" : "Error updating data." }';
+			parent::cerrarConexion();
 		}
 	}
 ?>
