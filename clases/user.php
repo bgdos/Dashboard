@@ -43,13 +43,13 @@
 			}
 			else if(func_num_args() == 1)
 			{
-				$id = $argumentos[0];
+				$email = $argumentos[0];
 				parent::abrirConexion();
-				$instruccion = "SELECT  email, name, lastname, type_Id, subcontractor_Id FROM users WHERE id = ?";
+				$instruccion = "SELECT id, name, lastname, type_Id, subcontractor_Id FROM users WHERE email = ?";
 				$comando = parent::$conexion -> prepare($instruccion);
-				$comando -> bind_param('i', $id);
+				$comando -> bind_param('s', $email);
 				$comando -> execute();
-				$comando -> bind_result($email, $name, $lastname, $typeId, $subcontractorId);
+				$comando -> bind_result($id, $name, $lastname, $typeId, $subcontractorId);
 				$encontro = $comando -> fetch();
 				mysqli_stmt_close($comando);
 				parent::cerrarConexion();
@@ -131,6 +131,39 @@
 				return $resultado;
             }
         }
+        function addUser($instruccion)// recibe una cadena de texto con uno o varios registros.
+		{
+			parent::abrirConexion();
+			if (parent::$conexion -> multi_query($instruccion)=== true)
+				echo '{ "status" : 0, "message" : "Data added successfully." }';
+			else 
+				echo '{ "status" : 1, "message" : "Error." }';
+			parent::cerrarConexion();
+		}
+        function editUser($instruccion)// recibe una cadena de texto con uno o varios registros.
+		{
+			parent::abrirConexion();
+			if (parent::$conexion -> multi_query($instruccion)=== true)
+				echo '{ "status" : 0, "message" : "Data updated successfully." }';
+			else 
+				echo '{ "status" : 1, "message" : "Error updating data." }';
+			parent::cerrarConexion();
+		}
+        function deleteUser($id)
+		{
+			$instruccion = "DELETE FROM users WHERE email = ? ;";
+			parent::abrirConexion();
+			$comando = parent::$conexion->prepare($instruccion);
+			$comando->bind_param('s', $id);
+			$comando->execute();
+			if ($comando->affected_rows > 0)
+				$resultado = true;
+			else
+				$resultado = false;
+			mysqli_stmt_close($comando);
+			parent::cerrarConexion();
+			return $resultado;
+		}
 		
 	}
 ?>
