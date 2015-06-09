@@ -147,7 +147,7 @@
                 $this->materialId = $argumentos[3];
 			}
 		}
-		function producedQty($Id)
+		function producedQty($id)
 		{
 			$instruccion = "SELECT sum(qty) FROM produced WHERE material_id = ?;";
 			parent::abrirConexion();
@@ -164,6 +164,15 @@
 				return $producedQty;
 			else
 				return 0;
+		}
+		function SaveProduced($instruccion)// recibe una cadena de texto con uno o varios registros.
+		{
+			parent::abrirConexion();
+			if (parent::$conexion -> multi_query($instruccion)=== true)
+				echo '{ "status" : 0, "message" : "Production saved successfully." }';
+			else 
+				echo '{ "status" : 1, "message" : "Error saving data." }';
+			parent::cerrarConexion();
 		}
 	}
 ?>
