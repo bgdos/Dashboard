@@ -4,8 +4,8 @@
 	class Subassy extends Conexion
 	{
 		//atributos
-		private $id = 0;
-		private $description = '';
+		private $id;
+		private $description;
 		
 		//propiedades
 		public function getId() { return $this->id; }
