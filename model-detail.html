@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Outsourcing Production Dashboard | Hyundai Translead</title>
+	<link rel="shortcut icon" href="favicon.jpg" type="image/jpg">
+	<link rel="icon" href="favicon.jpg" type="image/jpg">
     <meta http-equiv="cache-control" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
@@ -22,9 +24,8 @@
         </div>
         <div class="user-data">
             <a>Hello, <span id="user-name"></span>!</a>
-            <a href="#" class="option"><img src="images/user.png">My Profile</a>
-            <a onclick="cerrarSesion();" class="option"><img src="images/lock2.png" >Log out</a>
-            <a href="main.html" class="option"><img src="images/calendar2.png">Dashboard</a>
+            <a href="javascript:updateProfile();" class="option"><img src="images/user_20.png">My Profile</a>
+			<a onclick="cerrarSesion();" class="option"><img src="images/lock_closed_20.png">Log out</a>
         </div>
     </header>
     <div class="container">
@@ -41,88 +42,88 @@
             <div class="detail-wrap" onclick="onclickSubassyDetail('REAR FRAME')">
                 <h2 class="detail-sub">Rear Frame</h2>
                 <div><h2>Produced</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
 				<h2 class="infop"><span id="rf-dp" class="sumd">0 /</span><span id="rf-tp"> 0</span></h2>
                 </div>
                 <div><h2>Delivered</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infod"><span id="rf-dd" class="sumd">0 /</span><span id="rf-td"> 0</span></h2>
                 </div>
             </div>
             <div class="detail-wrap" onclick="onclickSubassyDetail('REAR BUMPER')">
                 <h2 class="detail-sub">Rear Bumper</h2>
                 <div><h2>Produced</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infop"><span id="rb-dp" class="sumd">0 /</span><span id="rb-tp"> 0</span></h2>
                 </div>
                 <div><h2>Delivered</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infod"><span id="rb-dd" class="sumd">0 /</span><span id="rb-td"> 0</span></h2>
                 </div>
             </div>
             <div class="detail-wrap" onclick="onclickSubassyDetail('LANDING GEAR')">
                 <h2 class="detail-sub">Landing Gear</h2>
                 <div><h2>Produced</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infop"><span id="lg-dp" class="sumd">0 /</span><span id="lg-tp"> 0</span></h2>
                 </div>
                 <div><h2>Delivered</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infod"><span id="lg-dd" class="sumd">0 /</span><span id="lg-td"> 0</span></h2>
                 </div>
             </div>
             <div class="detail-wrap" onclick="onclickSubassyDetail('LARGE SLIDER')">
                 <h2 class="detail-sub">Large Slider</h2>
                 <div><h2>Produced</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infop"><span id="ls-dp" class="sumd">0 /</span><span id="ls-tp"> 0</span></h2>
                 </div>
                 <div><h2>Delivered</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infod"><span id="ls-dd" class="sumd">0 /</span><span id="ls-td"> 0</span></h2>
                 </div>
             </div>
             <div  class="detail-wrap" onclick="onclickSubassyDetail('SMALL SLIDER')">
                 <h2 class="detail-sub">Small Slider</h2>
                 <div><h2>Produced</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infop"><span id="sl-dp" class="sumd">0 /</span><span id="sl-tp"> 0</span></h2>
                 </div>
                 <div><h2>Delivered</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infod"><span id="sl-dd" class="sumd">0 /</span><span id="sl-td"> 0</span></h2>
                 </div>
             </div>
             <div class="detail-wrap" onclick="onclickSubassyDetail('X-MEN FWD')">
                 <h2 class="detail-sub">X-Mem FWD</h2>
                 <div><h2>Produced</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infop"><span id="xf-dp" class="sumd">0 /</span><span id="xf-tp"> 0</span></h2>
                 </div>
                 <div><h2>Delivered</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infod"><span id="xf-dd" class="sumd">0 /</span><span id="xf-td"> 0</span></h2>
                 </div>
             </div>
             <div class="detail-wrap" onclick="onclickSubassyDetail('X-MEN DROP')">
                 <h2 class="detail-sub">X-Mem Drop</h2>
                 <div><h2>Produced</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infop"><span id="xd-dp" class="sumd">0 /</span><span id="xd-tp"> 0</span></h2>
                 </div>
                 <div><h2>Delivered</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infod"><span id="xd-dd" class="sumd">0 /</span><span id="xd-td"> 0</span></h2>
                 </div>
             </div>
             <div class="detail-wrap" onclick="onclickSubassyDetail('FRONT POST')">
                 <h2 class="detail-sub">Front Post</h2>
                 <div><h2>Produced</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infop"><span id="fp-dp" class="sumd">0 /</span><span id="fp-tp"> 0</span></h2>
                 </div>
                 <div><h2>Delivered</h2>
-                    <h2 class="sum">Daily / Sum</span></h2>
+                    <h2 class="sum">Daily / Sum</h2>
                     <h2 class="infod"><span id="fp-dd" class="sumd">0 /</span><span id="fp-td"> 0</span></h2>
                 </div>
             </div>
@@ -137,25 +138,34 @@
             <div>
         </center>
     </div>
-    <div class="popup">
-        <div class="info">
+	<div class="popup">
+        <div class="info pass">
             <a class="cerrar" onclick="closePopup()"></a>
-            <h1>Sub-Assy Details</h1>
-            <table class="details-sub">
-                <thead>
-                    <tr>
-                        <th>Vendor</th>
-                        <th>P.O.</th>
-                        <th>SAP No.</th>
-                        <th>Description</th>
-                        <th>Qty</th>
-                    </tr>
-                </thead>
-                <tbody id="subassy-detail">
-                    <tr>
-                    </tr>
-                </tbody>
-            </table>
+            <h1 id="popheader"><span id="head-mess"></span></h1>
+            <div id="pop-message">
+            </div>
         </div>
-    </div>
+	</div>
+	<div class="popup2">
+		<div class="info">
+			<a class="cerrar" onclick="$('.info').animate({'top':'-100%'},500,function(){
+		$('.popup2').fadeOut('fast');});"></a>
+			<h1>Sub-Assy Details</h1>
+			<table class="details-sub">
+				<thead>
+					<tr>
+						<th>Vendor</th>
+						<th>P.O.</th>
+						<th>SAP No.</th>
+						<th>Description</th>
+						<th>Qty</th>
+					</tr>
+				</thead>
+				<tbody id="subassy-detail">
+					<tr>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </html>
