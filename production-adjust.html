@@ -3,13 +3,13 @@
         <h4 class="title">Production (Adjust)</h4>
         <hr>
         <input type="number" placeholder="Model number" id="modelNo" class="ml-10" min="0">
-        <input type="button" onclick="clickProduction()"  value="Find">        
-		<input type="button" value="Save" onclick="" class="btn-save">
+        <input type="button" id="btn-find" onclick="clickProduction()"  value="Find">        
+		<input type="button" value="Save" onclick="productionSaveInit()" class="btn-save">
     </div>
     <table>
         <thead>
             <tr>
-                <th><input id="checkSchedule"  onclick="checkAll()"  type="checkbox"></th>  
+                <th><input  onclick="checkAll(this)"  type="checkbox"></th>  
                 <th>PO</th>
                 <th>SAP No.</th>
                 <th>Description</th>
