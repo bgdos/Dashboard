@@ -2,23 +2,23 @@
     <div class="filter f2">
         <h4 class="title">User (Delete)</h4>
 		<input type="email" placeholder="Email" id="f-email" class="ml-10">  
-		<input type="button" onclick="clickDelivery()" value="Find"> <br> 
+		<input type="button" id="btn-find" onclick="clickUser()" value="Find"> <br> 
         <hr>
 		<label class="margin-left user-req">User information:</label>   
 		<div class="user-menu">
 			<div id="inputs">
 				<label>Name: </label>
-				<input type="text" name="name" readonly><br><br>
+				<input type="text" id="name" readonly><br><br>
 				<label>Last Name: </label>
-				<input type="text" name="lastName" readonly><br><br>
+				<input type="text" id="lastname" readonly><br><br>
 				<label>Email: </label>
-				<input type="email" name="email" readonly><br><br>
+				<input type="email" id="email" readonly><br><br>
 				<label>Type: </label>
-				<input type="text" name="type" readonly><br><br>
+				<input type="text" id="type" readonly><br><br>
 				<label>Subcontractor: </label>
-				<input type="text" name="subcontractor" readonly><br><br>
+				<input type="text" id="subcontractor" readonly><br><br>
 			</div>
-			<button type="button" onclick="" class="btn-delete"><img src="images/delete_32.png" style="height:14px">Delete</button>
+			<button type="button" onclick="deleteUser()" class="btn-delete"><img src="images/delete_32.png" style="height:14px">Delete</button>
 		</div> 
 	</div>
 </content>
