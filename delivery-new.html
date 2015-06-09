@@ -1,27 +1,27 @@
-<content class="po">
+<content>
     <div class="filter f2">
         <h4 class="title">Delivery (New)</h4>
         <hr>
 		<label class="margin-left">PO No.</label>
-		<input type="number" placeholder="PO number" id="po-no" min="0"> 
-		 <input type="button" onclick="clickDelivery()" value="Find">   
-		<input type="button" value="Save" onclick="" class="btn-save">
+		<input type="number" placeholder="PO number" id="p-no" min="0"> 
+		<input type="button" id="btn-find" onclick="clickDelivery()" value="Find">   
+		<input type="button" value="Save" onclick="ReceivingSaveInit()" class="btn-save">
     </div>
-    <table>
+    <table class="deliv-table">
         <thead>
             <tr>
-                <th><input id="checkSchedule"  onclick="checkAll()" type="checkbox"></th>
+                <th><input id="checkSchedule"  onclick="checkAll(this)" type="checkbox"></th>
                 <th>PO</th>
                 <th>SAP No.</th>
                 <th>Description</th>
                 <th>PO Qty</th>
                 <th>Line</th>
                 <th>Date</th>
-				<th>Prod. Qty</th>
-				<th>Deliv. Qty</th>
-				<th>Max Qty</th>
-				<th>Pack No.</th>
-				<th>Pack Qty</th>
+		<th>Prod. Qty</th>
+		<th>Deliv. Qty</th>
+		<th>Max Qty</th>
+		<th>Pack No.</th>
+		<th>Pack Qty</th>
             </tr>
         </thead>
         <tbody id="model-pos">
