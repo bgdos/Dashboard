@@ -9,10 +9,11 @@
 		private $id;
 		private $qty;
 		private $pDate;
-        private $modelId;
-        private $materialId;
-        private $daily;
-        private $sum;
+		private $modelId;
+		private $materialId;
+		private $daily;
+		private $sum;
+		private $packing;
 		
 		//propiedades
 		public function getId() { return $this->id; }
@@ -27,6 +28,8 @@
 		public function setMaterialId($value) { $this->materialId = $value; }
         public function getDaily() { return $this->daily; }
         public function getSum() { return $this->sum; }
+        public function getPacking() { return $this->packing; }
+        public function setPacking($value) { $this->packing = $value; }
 		
 		//constructor
 		function __construct()
@@ -41,6 +44,7 @@
 				$this->pDate = '';
                 $this->modelId = new Model();
                 $this->materialId = new Material();
+                $this->packing  = '';
 			}
 			//se recibió un argumento, se construye el objeto con datos
 			if(func_num_args() == 1)
@@ -50,7 +54,7 @@
 				//abrir conexión a servidor
 				parent::abrirConexion();
 				//comando de SQL
-				$instruccion = "select qty, d_date, model_id, material_id from delivery where id = ?";
+				$instruccion = "select qty, d_date, model_id, material_id, packing from delivery where id = ?";
 				//comando
 				$comando = parent::$conexion->prepare($instruccion);
 				//parámetros
@@ -58,7 +62,7 @@
 				//ejecutar comando
 				$comando->execute();
 				//resultado
-				$comando->bind_result($qty, $pDate, $modelId, $materialId);
+				$comando->bind_result($qty, $pDate, $modelId, $materialId, $packing);
 				//leer datos 
 				$encontro = $comando->fetch();
 				//cerrar comando
@@ -73,6 +77,7 @@
                     $this->pDate = $pDate;
                     $this->modelId = new Model($modelId);
                     $this->materialId = new Material($materialId);
+                    $this->packing  = $packing;
 				}
 				else
 				{
@@ -81,6 +86,7 @@
                     $this->pDate = '';
                     $this->modelId = new Model();
                     $this->materialId = new Material();
+                    $this->packing  = '';
 				}	
 			}
              else if (func_num_args()==2)
@@ -140,9 +146,9 @@
                 $this->materialId = $argumentos[3];
 			}
 		}
-		function deliveredQty($Id)
+		function deliveredQty($id)
 		{
-			$instruccion = "SELECT sum(qty) FROM delivery WHERE material_id = ?;";
+			$instruccion = "SELECT sum(qty) FROM delivery WHERE material_id = ? AND statusId = 2;";
 			parent::abrirConexion();
 			$comando = parent::$conexion->prepare($instruccion);
 			$comando->bind_param('i', $id);
@@ -157,6 +163,24 @@
 				return $producedQty;
 			else
 				return 0;
+		}
+		function SaveDelivery($instruccion)// recibe una cadena de texto con uno o varios registros.
+		{
+			parent::abrirConexion();
+			if (parent::$conexion -> multi_query($instruccion)=== true)
+				echo '{ "status" : 0, "message" : "Delivery saved successfully." }';
+			else 
+				echo '{ "status" : 1, "message" : "Error saving data." }';
+			parent::cerrarConexion();
+		}
+		function ConfirmDelivery($instruccion)// recibe una cadena de texto con uno o varios registros.
+		{
+			parent::abrirConexion();
+			if (parent::$conexion -> multi_query($instruccion)=== true)
+				echo '{ "status" : 0, "message" : "Delivery confirmed successfully." }';
+			else 
+				echo '{ "status" : 1, "message" : "Error confirming data." }';
+			parent::cerrarConexion();
 		}
 	}
 ?>
