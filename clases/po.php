@@ -37,7 +37,7 @@
 				//abrir conexión a servidor
 				parent::abrirConexion();
 				//comando de SQL
-				$instruccion = "select fecha, subcontractor_Id from po where id = ?";
+				$instruccion = "select date, subcontractor_Id from po where id = ?";
 				//comando
 				$comando = parent::$conexion->prepare($instruccion);
 				//parámetros
