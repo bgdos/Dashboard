@@ -10,10 +10,14 @@ var txt; //text
 var imgprocessing = 'images/loading_anim.gif';  // process image
 var imgconfirmation = 'images/loading_anim.gif'; ; // confirmation image
 var models = [];
+var ids = [];
+var index = [];
+var materials = [];
 
 /* page start */
-function index() {
-   enterbutton();
+function login()
+{
+   enterbutton('btnlgn');
    passMessage();
 }
 function start()
@@ -29,10 +33,6 @@ function start()
     {
         date(1);
 		tablesort('.daily-detail');
-    }
-    if (window.location.href == 'http://localhost:8080/production_dashboard/index.html')
-    {
-        passMessage();
     }
 	if (window.location.href == 'http://localhost:8080/production_dashboard/model-detail.html')
     {
@@ -72,9 +72,6 @@ function passMessage()
         openPopup();
         setTimeout(function(){ window.location = 'index.html'; }, 2000);
     }
-    else
-        {
-        }
 }
 /* 
 *   @main
@@ -102,8 +99,8 @@ function loadScheduleInfo(schedule)
 {
 	var modelsArray = new Array();
 	var tb = document.getElementById('prod-mod');
-	var filas = tb.getElementsByTagName("tr");
-	if (filas.length > 0)
+	var rows = tb.getElementsByTagName("tr");
+	if (rows.length > 0)
 		tb.innerHTML = '';
 	for (var i=0; i < schedule.length; i++)
 		{
@@ -229,8 +226,8 @@ function onclickSubassyDetail(obj)
 function loadSubAssyDetailInfo(sub)
 {
 	var tb = document.getElementById('subassy-detail');
-	var filas = tb.getElementsByTagName("tr");
-	if (filas.length > 0)
+	var rows = tb.getElementsByTagName("tr");
+	if (rows.length > 0)
 		tb.innerHTML = '';
 	for (var i=0; i < sub.length; i++)
 		{
@@ -241,7 +238,9 @@ function loadSubAssyDetailInfo(sub)
 			tr.insertCell(3).innerHTML = sub[i].description;
 			tr.insertCell(4).innerHTML = sub[i].qty;
 		}
-	openPopup();
+	$('.popup2').fadeIn(200,function(){
+            $('.info').animate({'top':'35%'},200);
+        });
 	closeprocessing();
 	
 }
@@ -277,7 +276,7 @@ function progressBar(percent, element) {
 *
 *
 */
-/* Daily repoprt*/
+/* Daily report*/
 function Daily()
 {
 	var dailydate = document.getElementById("date").value;
@@ -309,8 +308,8 @@ function onclickDailyReport()
 function loadDailyReport(daily)
 {
 	var tb = document.getElementById('daily-reportDetail');
-	var filas = tb.getElementsByTagName("tr");
-	if (filas.length > 0)
+	var rows = tb.getElementsByTagName("tr");
+	if (rows.length > 0)
 		tb.innerHTML = '';
 	for (var i=0; i < daily.length; i++)
 		{
@@ -341,18 +340,18 @@ function loadDailyReport(daily)
 function saveSchedule(){
 	openprocessing();
 	var tb = document.getElementById('schedule-add');
-	var filas = tb.getElementsByTagName("tr");
-	if (filas.length > 0)
+	var rows = tb.getElementsByTagName("tr");
+	if (rows.length > 0)
 		{
-			var line, model, owner, lot, sDate, start = false;
+			var line = 0, model = 0, owner = '', lot = 0, sDate = mull, start = false;
 			var schedule = [];
-			for (var i = 0; i < filas.length; i++)
+			for (var i = 0; i < rows.length; i++)
 				{
 					line = document.getElementById('line').value;
-					model= filas[i].children[1].children[0].value;
-					owner = filas[i].children[2].children[0].value.toUpperCase();
-					lot = filas[i].children[3].children[0].value;
-					sDate = filas[i].children[4].children[0].value;
+					model= rows[i].children[1].children[0].value;
+					owner = rows[i].children[2].children[0].value.toUpperCase();
+					lot = rows[i].children[3].children[0].value;
+					sDate = rows[i].children[4].children[0].value;
 					if (line != '' & model > 0  & owner != '' & lot > 0 & sDate != '' )
 						{	
 							schedule.push({line: line, model : model, owner:owner, lot: lot, date: sDate});
@@ -377,8 +376,8 @@ function saveSchedule(){
 function ScheduleEditInfo(schedule)
 {
 	var tb = document.getElementById('schedule-edit');
-	var filas = tb.getElementsByTagName("tr");
-	if (filas.length > 0)
+	var rows = tb.getElementsByTagName("tr");
+	if (rows.length > 0)
 		tb.innerHTML = '';
 	for (var i=0; i < schedule.length; i++)
 		{
@@ -388,7 +387,7 @@ function ScheduleEditInfo(schedule)
 			tr.insertCell(2).innerHTML =  '<input type="number" value="'+schedule[i].number+'"></input>';
 			tr.insertCell(3).innerHTML =  '<input type="text" value="'+schedule[i].owner+'"></input>';
 			tr.insertCell(4).innerHTML =  '<input type="number" value="'+schedule[i].lot+'"></input>';
-			tr.insertCell(5).innerHTML =  '<select><option value="">----</option><option value="1">A</option><option value="2">B</option><option value="3">C</option><option value="4">H</option></select>';
+			tr.insertCell(5).innerHTML =  '<select><option value="'+schedule[i].lineId+'">'+schedule[i].line+'</option><option value="1">A</option><option value="2">B</option><option value="3">C</option><option value="4">H</option></select>';
 			tr.insertCell(6).innerHTML =  '<input type="date" value="'+schedule[i].startDate+'"></input>';
 		}
 	closeprocessing(); 
@@ -397,8 +396,8 @@ function ScheduleEditInfo(schedule)
 function ScheduleDeleteInfo(schedule)
 {
 	var tb = document.getElementById('schedule-edit');
-	var filas = tb.getElementsByTagName("tr");
-	if (filas.length > 0)
+	var rows = tb.getElementsByTagName("tr");
+	if (rows.length > 0)
 		tb.innerHTML = '';
 	for (var i=0; i < schedule.length; i++)
 		{
@@ -413,18 +412,52 @@ function ScheduleDeleteInfo(schedule)
 		}
 	closeprocessing(); 
 }
-function saveIdSchedule()
+function saveIds()
 {
-	var check = [];
-	var index = []
+	ids = []; index = [];
 	var allcheck = document.getElementsByName('all-check');
-	for(var i = 0;i < allcheck.length; i++)
+	if (allcheck.length > 0)
+	{
+		for(var i = 0;i < allcheck.length; i++)
 		{
 			if(allcheck[i].checked == true)
-			{check.push(allcheck[i].value);index.push(i)}
+			{ids.push(allcheck[i].value);index.push(i)}
 		}
-	sessionStorage.index = JSON.stringify(index);
-	return check;
+		return ids;
+	}
+	else
+	{
+		closeprocessing();
+		popInfo('Error', 'There is no data to process it.')
+	}
+	
+}
+function ScheduleEditCheck () {
+	openprocessing();
+	saveIds();
+	if (index[0] != null)
+	{
+		var data = [];
+		var tb = document.getElementById('schedule-edit');
+		var rows = tb.getElementsByTagName("tr");
+		for (var i = 0; i < ids.length; i++)
+			{
+				id= ids[i];
+				model= rows[index[i]].children[2].children[0].value;
+				owner = rows[index[i]].children[3].children[0].value.toUpperCase();
+				lot = rows[index[i]].children[4].children[0].value;
+				line = rows[index[i]].children[5].children[0].value;
+				sDate = rows[index[i]].children[6].children[0].value;
+				data.push( {id: id, line: line, model : model, owner:owner, lot: lot, date: sDate})
+
+			}
+		ScheduleEdit(data);
+	}
+	else
+	{
+		closeprocessing();
+		popInfo('Error', 'There is no data to process it.')
+	}
 }
 	
 /* 
@@ -443,8 +476,8 @@ function purchaseOrderEdit(po)
 	else if (sessionStorage.option == 2)
 	 		tb = document.getElementById('purchase-delete');
 	
-	var filas = tb.getElementsByTagName("tr");
-	if (filas.length > 0)
+	var rows = tb.getElementsByTagName("tr");
+	if (rows.length > 0)
 		tb.innerHTML = '';
 	for (var i=0; i < po.length; i++)
 		{
@@ -462,7 +495,7 @@ function purchaseOrderEdit(po)
 			option += '</select>';
 			tr.insertCell(5).innerHTML = option;
 			tr.insertCell(6).innerHTML =  '<input readonly type="text" value="'+po[i].line+'"></input>';
-			tr.insertCell(7).innerHTML =  '<input readonly type="date" value="'+po[i].date+'"></input>';
+			tr.insertCell(7).innerHTML =  '<input readonly type="text" value="'+po[i].date+'"></input>';
 			if (sessionStorage.option == 2)
 			{
 				if (po[i].produced > 0)
@@ -475,8 +508,6 @@ function purchaseOrderEdit(po)
 					tr.insertCell(9).innerHTML =  '<button onclick="poDelete('+po[i].materialId+')"><img src="images/delete_32.png" style="height:14px"> Delete</button>';}
 			}
 			models = po[0].models;
-			
-			
 		}
 	var c = 1;
 	$('.model').each(function(){	
@@ -535,8 +566,8 @@ function onchangeModelSelect(element, c){
 }
 function loadLine(c, n)
 {
-	var filas = document.getElementsByTagName("tr");
-	var line = filas[c].cells[6].firstChild;
+	var rows = document.getElementsByTagName("tr");
+	var line = rows[c].cells[6].firstChild;
 	if (n=='')
 		line.value = '';
 	else
@@ -545,24 +576,24 @@ function loadLine(c, n)
 function savePo(){
 	openprocessing();
 	var tb = document.getElementById('po');
-	var filas = tb.getElementsByTagName("tr");
-	if (filas.length > 0)
+	var rows = tb.getElementsByTagName("tr");
+	if (rows.length > 0)
 		{
-			var po, sapnumber, description, qty, model, line, date, modelId =0, start = false;
+			var po = 0, sapnumber = '', description = '', qty = 0, model = 0, line = 0, date = null, modelId =0, start = false;
 			var poArray = [];
-			for (var i = 0; i < filas.length; i++)
+			for (var i = 0; i < rows.length; i++)
 				{
-					po = filas[i].children[1].children[0].value;
-					sapnumber = filas[i].children[2].children[0].value;
-					description = filas[i].children[3].children[0].value;
-					qty = filas[i].children[4].children[0].value;
-					model = models[filas[i].children[5].children[0].value];
+					po = rows[i].children[1].children[0].value;
+					sapnumber = rows[i].children[2].children[0].value;
+					description = rows[i].children[3].children[0].value;
+					qty = rows[i].children[4].children[0].value;
+					model = models[rows[i].children[5].children[0].value];
 					if (model != null)
 						modelId = model.id
 					else 
 						modelId = 0;
-					line = filas[i].children[6].children[0].value;
-					date = filas[i].children[7].children[0].value;
+					line = rows[i].children[6].children[0].value;
+					date = rows[i].children[7].children[0].value;
 					if (po > 0 & sapnumber != ''  & description != '' & qty > 0 & modelId > 0 & line != '' & date != '' )
 						{	
 							poArray.push({po: po, sapnumber: sapnumber, description:description, qty: qty, model: modelId, line: line, date: date, subcontractor: sessionStorage.subcontractor});
@@ -570,7 +601,7 @@ function savePo(){
 					else
 						{
 							closeprocessing();
-							popInfo("Purchase order Information 1", "Data error, please fill correctly .");
+							popInfo("Error", "Data error, please fill correctly .");
 							break;
 							
 						}
@@ -579,47 +610,69 @@ function savePo(){
 				{poAdd(poArray);}
 			else
 				{
-					popInfo("Purchase order Information 2", "Data error, please fill correctly ."); 
+					popInfo("Error", "Data error, please fill correctly ."); 
 				}
 		}
 }
 /* production confirm / update  */
 function productionConfirm(material)
 {
+	materials = material;
     var tb = document.getElementById('model-pos');
-	var filas = tb.getElementsByTagName("tr");
-	if (filas.length > 0)
+	var rows = tb.getElementsByTagName("tr");
+	if (rows.length > 0)
 		tb.innerHTML = '';
 	for (var i=0; i < material.length; i++)
 		{
 			var tr = tb.insertRow(i);
-			tr.insertCell(0).innerHTML =  '<input name="all-check" class="all-check" type="checkbox" value="'+material[i].id+'"></input>';
+			if (sessionStorage.option == 5 || sessionStorage.option == 4)
+				tr.insertCell(0).innerHTML =  '<input name="all-check" class="all-check" type="checkbox" value="'+material[i].idMaterial+'"></input>';
+			else
+				tr.insertCell(0).innerHTML =  '<input name="all-check" class="all-check" type="checkbox" value="'+material[i].id+'"></input>';
 			tr.insertCell(1).innerHTML =   '<input type="number" value="'+material[i].poId+'" readonly class="prod"></input>';
 			tr.insertCell(2).innerHTML =  '<input type="text" value="'+material[i].number+'" readonly></input>';
 			tr.insertCell(3).innerHTML =  '<input type="text" value="'+material[i].description+'" readonly></input>';
 			tr.insertCell(4).innerHTML =  '<input type="number" value="'+material[i].qty+'" readonly class="prod"></input>';
 			tr.insertCell(5).innerHTML =  '<input type="text" value="'+material[i].line+'" readonly></input>';
-			tr.insertCell(6).innerHTML =  '<input type="date" value="'+material[i].date+'" readonly></input>';
-            
             if (sessionStorage.option == 1)
             {
+				tr.insertCell(6).innerHTML =  '<input type="date" value="'+material[i].date+'" readonly></input>';
                 tr.insertCell(7).innerHTML =  '<input type="number" value="'+material[i].produced+'" readonly class="prod"></input>';
                 tr.insertCell(8).innerHTML =  '<input type="number" value="'+material[i].max+'" readonly class="prod"></input>';
                 tr.insertCell(9).innerHTML =  '<input type="number" min="0" max="'+material[i].max+'" value="'+material[i].max+'"></input>';
             }
             if (sessionStorage.option == 2)
             {
+				tr.insertCell(6).innerHTML =  '<input type="date" value="'+material[i].date+'" readonly></input>';
                 tr.insertCell(7).innerHTML =  '<input type="number" value="'+material[i].produced+'" readonly class="prod"></input>';
-				tr.insertCell(8).innerHTML =  '<input type="number" value="'+material[i].max+'" readonly class="prod"></input>';
+				tr.insertCell(8).innerHTML =  '<input type="number" value="'+material[i].delivered+'" readonly class="prod"></input>';
                 tr.insertCell(9).innerHTML =  '<input type="number" min="'+material[i].delivered+'" max="'+material[i].qty+'" value="'+material[i].delivered+'"></input>';
             }
              if (sessionStorage.option == 3)
             {
-                tr.insertCell(7).innerHTML =  '<input type="number" value="'+material[i].produced+'" readonly></input>';
+				tr.insertCell(6).innerHTML =  '<input type="date" value="'+material[i].date+'" readonly></input>';
+                tr.insertCell(7).innerHTML =  '<input type="number" value="'+material[i].produced+'" readonly class="prod"></input>';
                 tr.insertCell(8).innerHTML =  '<input type="number" value="'+material[i].delivered+'" readonly></input>';
                 tr.insertCell(9).innerHTML =  '<input type="number" value="'+material[i].max+'" readonly></input>';
-                tr.insertCell(10).innerHTML =  '<input type="number"></input>';
-				tr.insertCell(11).innerHTML =  '<input type="number"></input>';
+                tr.insertCell(10).innerHTML =  '<input type="text" ></input>';
+				tr.insertCell(11).innerHTML =  '<input type="number" min="'+material[i].delivered+'" max="'+material[i].max+'"></input>';
+            }
+			if (sessionStorage.option == 4)
+            {
+				tr.insertCell(6).innerHTML =  '<input type="number" value="'+material[i].produced+'" readonly class="prod"></input>';
+				tr.insertCell(7).innerHTML =  '<input type="date" value="'+material[i].date+'" readonly></input>';
+                tr.insertCell(8).innerHTML =  '<input type="number" value="'+material[i].devqty+'" readonly></input>';
+                tr.insertCell(9).innerHTML =  '<input type="number" value="'+material[i].packingQty+'" readonly></input>';
+                tr.insertCell(10).innerHTML =  '<input type="number" value="" min="0"></input>';
+            }
+            if (sessionStorage.option == 5)
+            {
+				tr.insertCell(6).innerHTML =  '<input type="date" value="'+material[i].date+'" readonly></input>';
+                tr.insertCell(7).innerHTML =  '<input type="number" value="'+material[i].produced+'" readonly></input>';
+                tr.insertCell(8).innerHTML =  '<input type="number" value="'+material[i].devqty+'" readonly></input>';
+                tr.insertCell(9).innerHTML =  '<input type="number" value="'+material[i].maxd+'" readonly></input>';
+                tr.insertCell(10).innerHTML =  '<input type="text" value="'+material[i].packing+'"></input>';
+                 tr.insertCell(11).innerHTML =  '<input type="number" min="0" max="'+material[i].maxd+'" value="'+material[i].packingQty+'" ></input>';
             }
 			
 		}
@@ -637,20 +690,258 @@ function clickProduction()
 			popInfo('Information', 'Please enter a valid model number.')
 		}
 }
+/* Production save */
+function productionSaveInit(){
+	var material = 0, max = 0, min = 0, prod = 0, mq = 0, qty = 0, materials = [];
+	var m = document.getElementById('modelNo');
+	if (m.value > 0)
+	{
+		openprocessing();
+		var trs = document.getElementsByTagName('tr');
+		for (var i = 1; i < trs.length; i++)
+		{
+			if (trs[i].firstChild.firstChild.checked = true)
+			{
+				material = trs[i].firstChild.firstChild.value;
+				qty = trs[i].children[9].firstChild.value;
+				if (sessionStorage.option == 1)
+				{
+					max = trs[i].children[8].firstChild.value;
+					if (parseInt(qty) <= parseInt(max) & parseInt(qty) > 0)
+					{
+						materials.push({material : material, qty : qty});
+						if (materials != null)
+							productionSave(materials);
+						else
+						{
+							closeprocessing();
+							popInfo('Error', 'No data received');
+						}	
+					}
+					else
+					{
+						closeprocessing();
+						popInfo('Error', '"Qty" must be greater than 0 and lower or equal than "Max Qty"');	
+					}
+				}
+				if (sessionStorage.option == 2)
+				{
+					min = trs[i].children[8].firstChild.value;
+					prod = trs[i].children[7].firstChild.value;
+					mq = trs[i].children[4].firstChild.value;
+					if (parseInt(qty) >= parseInt(min) & parseInt(qty) <= parseInt(mq))
+					{
+						materials.push({material : material, qty : (qty - prod)});
+						if (materials != null)
+							productionSave(materials);
+						else
+						{
+							closeprocessing();
+							popInfo('Error', 'No data received');
+						}	
+					}
+					else
+					{
+						closeprocessing();
+						popInfo('Error', '"Adjust Qty" must be greater or equal than "Deliv. Qty" and lower or equal than "PO Qty"');	
+					}
+				}	
+			}
+		}
+	}
+	else
+	{
+		popInfo('Error', "Please enter a valid model number");
+	}
+	
+}
+function ReceivingSaveInit(){
+	var material = 0, max = 0, min = 0, packqty = 0, qty = 0, packing = 0, materials = [];
+	var p = document.getElementById('p-no');
+	if (p.value != '')
+	{
+		openprocessing();
+		var trs = document.getElementsByTagName('tr');
+		for (var i = 1; i < trs.length; i++)
+		{
+			if (trs[i].firstChild.firstChild.checked = true)
+			{
+				material = trs[i].firstChild.firstChild.value;
+				if (sessionStorage.option == 3 || sessionStorage.option == 5)
+				{
+					qty = trs[i].children[11].firstChild.value;
+					max = trs[i].children[9].firstChild.value;
+					packing = trs[i].children[10].firstChild.value;
+					if (parseInt(qty) <= parseInt(max) & parseInt(qty) > 0)
+					{
+						materials.push({material : material, qty : qty, packing: packing});
+						if (materials != null)
+							DeliverySave(materials);
+						else
+						{
+							closeprocessing();
+							popInfo('Error', 'No data received');
+						}	
+					}
+					else
+					{
+						closeprocessing();
+						popInfo('Error', '"Qty" must be greater than 0 and lower or equal than "Max Qty"');	
+					}
+				}
+				if (sessionStorage.option == 4)
+				{
+					qty = trs[i].children[10].firstChild.value;
+					max = trs[i].children[4].firstChild.value;
+					min = trs[i].children[8].firstChild.value;
+					packqty = trs[i].children[9].firstChild.value;
+					qty = trs[i].children[10].firstChild.value;
+					if (parseInt(qty) >= parseInt(min) & parseInt(qty) <= parseInt(max))
+					{
+						materials.push({material : material, qty : qty, packqty : packqty, packing: p.value, subcontractor: sessionStorage.subcontractor});
+						if (materials != null)
+							DeliverySave(materials);
+						else
+						{
+							closeprocessing();
+							popInfo('Error', 'No data received');
+						}	
+					}
+					else
+					{
+						closeprocessing();
+						popInfo('Error', '"Actual Qty" must be greater or equal than "Deliv. Qty" and lower or equal than "PO Qty"');	
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		if (sessionStorage.option == 3)
+			popInfo('Error', "Please enter a valid model number");
+		else
+			popInfo('Error', "Please enter a valid packing number");
+	}
+	
+}
 function clickDelivery()
 {
 	openprocessing();
-    var po = document.getElementById('po-no').value;
-	if (po > 0)
-    	delivery(po);
-	else
+    var p = document.getElementById('p-no').value;
+	if (sessionStorage.option == 3)
+	{
+		if (p > 0)
+		{
+			delivery(p);
+		}
+		else
 		{
 			closeprocessing();
 			popInfo('Information', 'Please enter a valid PO number.')
 		}
+	}
+	if (sessionStorage.option == 4 || sessionStorage.option == 5)
+	{
+		if (p != '')
+		{
+			deliveryConfirm(p);
+		}
+		else
+		{
+			closeprocessing();
+			popInfo('Information', 'Please enter a valid packing number.')
+		}
+	}
 }
+/*  user save */
+function validation()
+{
+	openprocessing();
+	var count = 0;
+	var inputs = document.getElementById('inputs').querySelectorAll('input');
+	for (var i = 0; i < inputs.length; i++) {
+		tooltip(inputs[i], '', 'right');
+		$(inputs[i]).tooltipster('disable');
+		if (inputs[i].checkValidity() == false) {
+			$(inputs[i]).tooltipster('content',inputs[i].validationMessage);
+			$(inputs[i]).tooltipster('enable');
+			$(inputs[i]).tooltipster('show');
+			count++;
+		}
+	}
+	var selects = document.getElementById('inputs').querySelectorAll('select');
+	for (var i = 0; i < selects.length; i++) {
+		tooltip(selects[i], 'Please select a valid option.', 'right');
+		$(selects[i]).tooltipster('disable');
+		if (selects[i].checkValidity() == false) {
+			$(selects[i]).tooltipster('content', 'Please select a valid option.');
+			$(selects[i]).tooltipster('enable');
+			$(selects[i]).tooltipster('show');
+			count++;
+		}
+	}
+	if (inputs[3].value != inputs[4].value)
+		{
+			$(inputs[3]).tooltipster('content', "Passwords doesn't match.");
+			$(inputs[4]).tooltipster('content', "Passwords doesn't match.");
+			$(inputs[3]).tooltipster('enable');
+			$(inputs[3]).tooltipster('show');
+			$(inputs[4]).tooltipster('enable');
+			$(inputs[4]).tooltipster('show');
+			count++;
+		}
+	if (inputs[3].value.length < 5 || inputs[3].value.length > 10 || inputs[4].value.length < 5 || inputs[4].value.length > 10)
+		{
+			$(inputs[3]).tooltipster('content', "Please enter a 5 to 10 characters password.");
+			$(inputs[4]).tooltipster('content', "Please enter a 5 to 10 characters password.");
+			$(inputs[3]).tooltipster('enable');
+			$(inputs[3]).tooltipster('show');
+			$(inputs[4]).tooltipster('enable');
+			$(inputs[4]).tooltipster('show');
+			count++;
+		}
+	if (count == 0)
+		saveUser();
+	else
+		closeprocessing();
+	
+}
+function saveUser(){
+        var email = '', password = '', name = '', lastname = '', typeId = 0, subcontractor = 0;
+        var userArray = [];
 
+        email = document.getElementById('email').value;
+        password= document.getElementById('password').value;
+        name = document.getElementById('name').value;
+        lastname = document.getElementById('lastname').value;
+   
+        typeId = document.getElementById('selectType').value;
+        subcontractor = document.getElementById('selectSubcontractor').value;
 
+  
+  
+        if (email != '' & password != ''  & name != '' & lastname != '' & typeId > 0 & subcontractor > 0 )
+            {	
+                userArray.push({email: email, password : password, name: name, lastname: lastname, typeId: typeId, subcontractor: subcontractor});
+            }
+        else
+            {
+                closeprocessing();
+            }
+        if (userArray.length > 0)
+        {userAdd(userArray);}
+        else
+            {
+                popInfo("User Information", "Data error, please fill correctly."); 
+            }
+    
+}
+/* user delete */
+function deleteUser()
+{
+    userDelete(document.getElementById('f-email').value);
+}
 /* update profile */
 function updateProfile()
 {
@@ -686,6 +977,28 @@ function profileUpdate()
 		
 }
 
+function clickUser()
+{
+    var email = document.getElementById('f-email').value;
+    userService(email);
+}
+function userEdit(user)
+{
+   
+    document.getElementById('name').value = user[0].name;
+    document.getElementById('lastname').value = user[0].lastname;
+    document.getElementById('email').value = user[0].email;
+    if (sessionStorage.option == 1)
+    {
+        $("#selectType").val(user[0].idType);
+        $("#selectSubcontractor").val(user[0].subcontractorId);
+    }
+    if (sessionStorage.option == 2)
+    {
+        document.getElementById('type').value = user[0].type;
+        document.getElementById('subcontractor').value = user[0].subcontractor;
+    }
+}
 /* 
 *   @Sub Menus
 *
@@ -719,6 +1032,7 @@ function scheduleEdit(e){
     $(".title").html("Production Schedule Edit");
     $( ".ajax" ).load( "schedule-edit.html");
 	window.location.hash = "#se";
+	enterbutton('btn-find');
 }
 /* delete production schedule */
 function scheduleDelete(e){
@@ -726,6 +1040,7 @@ function scheduleDelete(e){
     $(".title").html("Production Schedule Edit");
     $( ".ajax" ).load( "schedule-delete.html");
 	window.location.hash = "#sd";
+	enterbutton('btn-find');
  	$(".all-check").attr('display', 'none');
 }
 /* new PO */
@@ -743,24 +1058,24 @@ function PONew(e){
 function POEdit(e){
     ActivarSubMenu(e);
     $( ".ajax" ).load( "po-edit.html", function() {
-      //alert( "Load was performed." );
     });
+	enterbutton('btn-find');
 	sessionStorage.option = 1;
 }
 /* delete PO */
 function PODelete(e){
     ActivarSubMenu(e);
     $( ".ajax" ).load( "po-delete.html", function() {
-      //alert( "Load was performed." );
     });
+	enterbutton('btn-find');
 	sessionStorage.option = 2;
 }
 /* Production confirm */
 function ProductionConfirm(e){
     ActivarSubMenu(e);
     $( ".ajax" ).load( "production-confirm.html", function() {
-      //alert( "Load was performed." );
     });
+	enterbutton('btn-find');
 	sessionStorage.option = 1;
 }
 /* Production adjust */
@@ -769,6 +1084,7 @@ function ProductionAdjust(e){
     $( ".ajax" ).load( "production-adjust.html", function() {
       tooltip('.adjust-th');
     });
+	enterbutton('btn-find');
 	sessionStorage.option = 2;
 }
 /* delivery new */
@@ -776,19 +1092,24 @@ function DeliveryNew(e){
     ActivarSubMenu(e);
     $( ".ajax" ).load( "delivery-new.html", function() {
     });
+	enterbutton('btn-find');
     sessionStorage.option = 3;
-}
-/* delivery confirm */
-function DeliveryConfirm(e){
-    ActivarSubMenu(e);
-    $( ".ajax" ).load( "delivery-confirm.html", function() {
-    });
 }
 /* delivery edit */
 function DeliveryEdit(e){
     ActivarSubMenu(e);
     $( ".ajax" ).load( "delivery-edit.html", function() {
     });
+	enterbutton('btn-find');
+	sessionStorage.option = 5;
+}
+/* Receiving confirm */
+function ReceivingConfirm(e){
+    ActivarSubMenu(e);
+    $( ".ajax" ).load( "receiving-confirm.html", function() {
+    });
+	enterbutton('btn-find');
+	sessionStorage.option = 4;
 }
 /* user new*/
 function UserNew(e){
@@ -802,12 +1123,14 @@ function UserEdit(e){
     ActivarSubMenu(e);
     $( ".ajax" ).load( "user-edit.html", function() {
     });
+	sessionStorage.option = 1;
 }
 /* user delete */
 function UserDelete(e){
     ActivarSubMenu(e);
     $( ".ajax" ).load( "user-delete.html", function() {
     });
+	sessionStorage.option = 2;
 }
 /*End sub menus */
 
@@ -820,7 +1143,7 @@ function UserDelete(e){
 *
 /*
 /* popp ups */
-function openPopup(header, message){
+function openPopup(){
      $('.popup').fadeIn(200,function(){
             $('.info').animate({'top':'35%'},200);
         });
@@ -876,7 +1199,7 @@ function closeprocessing(){
         });
 }
 /* login enter button*/
-function enterbutton()
+function enterbutton(element)
 {
     document.onkeypress = keyPress;
 
@@ -885,17 +1208,16 @@ function enterbutton()
             var x = e || window.event;
             var key = (x.keyCode || x.which);
              if(key == 13 || key == 3){
-             obtenerToken();
-             document.getElementById('btnlgn').focus();
+             //obtenerToken();
+             document.getElementById(element).focus();
+			document.getElementById(element).onclick();
         }
     }
 }
 /* Check all */
-function checkAll()
-{
-	var checkSchedule = document.getElementById('checkSchedule');
-	
-	if (checkSchedule.checked == true)
+function checkAll(element)
+{	
+	if (element.checked == true)
 			$('.all-check').prop("checked", true);
 	else
 			$('.all-check').prop("checked", false);
@@ -914,52 +1236,4 @@ function date(wn){
 		$('#date').val(date);
 	sessionStorage.date = date;
 	return date;
-}
-function validation()
-{
-	var count = 0;
-	var inputs = document.getElementById('inputs').querySelectorAll('input');
-	for (var i = 0; i < inputs.length; i++) {
-		tooltip(inputs[i], '', 'right');
-		$(inputs[i]).tooltipster('disable');
-		if (inputs[i].checkValidity() == false) {
-			$(inputs[i]).tooltipster('content',inputs[i].validationMessage);
-			$(inputs[i]).tooltipster('enable');
-			$(inputs[i]).tooltipster('show');
-			count++;
-		}
-	}
-	var selects = document.getElementById('inputs').querySelectorAll('select');
-	for (var i = 0; i < selects.length; i++) {
-		tooltip(selects[i], 'Please select a valid option.', 'right');
-		$(selects[i]).tooltipster('disable');
-		if (selects[i].checkValidity() == false) {
-			$(selects[i]).tooltipster('content', 'Please select a valid option.');
-			$(selects[i]).tooltipster('enable');
-			$(selects[i]).tooltipster('show');
-			count++;
-		}
-	}
-	if (inputs[3].value != inputs[4].value)
-		{
-			$(inputs[3]).tooltipster('content', "Passwords doesn't match.");
-			$(inputs[4]).tooltipster('content', "Passwords doesn't match.");
-			$(inputs[3]).tooltipster('enable');
-			$(inputs[3]).tooltipster('show');
-			$(inputs[4]).tooltipster('enable');
-			$(inputs[4]).tooltipster('show');
-			count++;
-		}
-	if (inputs[3].value.length < 5 || inputs[3].value.length > 10 || inputs[4].value.length < 5 || inputs[4].value.length > 10)
-		{
-			$(inputs[3]).tooltipster('content', "Please enter a 5 to 10 characters password.");
-			$(inputs[4]).tooltipster('content', "Please enter a 5 to 10 characters password.");
-			$(inputs[3]).tooltipster('enable');
-			$(inputs[3]).tooltipster('show');
-			$(inputs[4]).tooltipster('enable');
-			$(inputs[4]).tooltipster('show');
-			count++;
-		}
-	//alert(count);
-	
 }
