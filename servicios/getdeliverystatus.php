@@ -6,6 +6,8 @@
         {
             $status =  new Delivery($_GET['idModel'],$_GET['date'] );
             $json = '{ 
+                    "idMaterial": '.$status->$materialId()->getId().',
+                    "description": "'.$status->$materialId()->getDescription().'",
                     "daily": '.$status->getDaily().',
                     "sum" : '.$status->getSum().'
             }';
