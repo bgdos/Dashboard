@@ -96,5 +96,32 @@
                 $this->idLine = new Line($argumentos[4]);
 			}
 		}
+		function saveSchedule($instruccion)// recibe una cadena de texto con uno o varios registros.
+			{
+			parent::abrirConexion();
+			if (parent::$conexion -> multi_query($instruccion)=== true)
+				echo '{ "status" : 0, "message" : "Data saved successfully." }';
+			else 
+				echo '{ "status" : 1, "message" : "Error on data saving." }';
+			parent::cerrarConexion();
+		}
+		function deleteSchedule($instruccion)// recibe una cadena de texto con uno o varios registros.
+			{
+			parent::abrirConexion();
+			if (parent::$conexion -> multi_query($instruccion)=== true)
+				echo '{ "status" : 0, "message" : "Models deleted." }';
+			else 
+				echo '{ "status" : 1, "message" : "Error deleting data." }';
+			parent::cerrarConexion();
+		}
+		function editSchedule($instruccion)// recibe una cadena de texto con uno o varios registros.
+			{
+			parent::abrirConexion();
+			if (parent::$conexion -> multi_query($instruccion)=== true)
+				echo '{ "status" : 0, "message" : "Data updated successfully." }';
+			else 
+				echo '{ "status" : 1, "message" : "Error updating data." }';
+			parent::cerrarConexion();
+		}
 	}
 ?>
