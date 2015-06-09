@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Outsourcing Production Dashboard | Hyundai Translead</title>
+	<link rel="shortcut icon" href="favicon.jpg" type="image/jpg">
+	<link rel="icon" href="favicon.jpg" type="image/jpg">
     <meta http-equiv="cache-control" content="no-cache"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
@@ -21,9 +23,8 @@
         </div>
         <div class="user-data">
             <a>Hello, <span id="user-name"></span>!</a>
-            <a href="javascript:updateProfile();" class="option"><img src="images/user.png"/>My Profile</a>
-            <a onclick="cerrarSesion();" class="option"><img src="images/lock2.png" />Log out</a>
-            <a href="main.html" class="option"><img src="images/calendar2.png">Dashboard</a>
+            <a href="javascript:updateProfile();" class="option"><img src="images/user_20.png">My Profile</a>
+			<a onclick="cerrarSesion();" class="option"><img src="images/lock_closed_20.png">Log out</a>
         </div>
     </header>
     <div class="container">
@@ -59,8 +60,12 @@
                 <li>Delivery
                     <ul>
                         <li id="li-delivery-new" onclick="DeliveryNew(this)">New</li>
-                        <li id="li-delivery-confirm" onclick="DeliveryConfirm(this)">Confirm</li>
                         <li id="li-delivery-edit" onclick="DeliveryEdit(this)">Edit</li>
+                    </ul>
+                </li>
+				 <li>Receiving
+                    <ul>
+                        <li id="li-receiving-confirm" onclick="ReceivingConfirm(this)">Confirm</li>
                     </ul>
                 </li>
                 <li>User
