@@ -85,11 +85,11 @@ ul{
     position: relative;
     padding: 10px;
     cursor: pointer;
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    -ms-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    transition: all 0.2s;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-in-out;
 }
 .sub-menu ul li:hover {
     background: #555;
@@ -108,11 +108,11 @@ ul{
     display: none;
     opacity: 0;
     visibility: hidden;
-    -webkit-transiton: opacity 0.2s;
-    -moz-transition: opacity 0.2s;
-    -ms-transition: opacity 0.2s;
-    -o-transition: opacity 0.2s;
-    -transition: opacity 0.2s;
+    -webkit-transition: opacity 0.3s;
+    -moz-transition: opacity 0.3s;
+    -ms-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
 }
 .sub-menu ul li ul li { 
 
@@ -128,9 +128,9 @@ ul{
     visibility: visible;
 }
 .sub-active{
-    border-bottom: solid 1pt #344e81;  
     color: #344e81;
     text-shadow: 1px 1px #ccc;
+	background:#e2e2e2;
 }
 .filter, content, .sub-menu{
     background: #fff;
@@ -166,7 +166,7 @@ header img {
     position: relative;
 }
 .user-data{
-    margin-top: 28px;
+    margin-top: 20px;
     margin-right: 10px;
     font-weight: bold;
     font-size: 13px;
@@ -176,21 +176,45 @@ header img {
     margin-right: 2px;
 }
 .user-data .option, .user-data a{
-    margin-right: 20px;
+	padding: 5px 10px 5px 10px;;
 }
-.user-data .option:hover{
-    text-decoration: underline;
+.user-data a:first-child {
+    margin-right: 10px;
 }
 a, .user-data .option{
     text-decoration: none;
 }
+
 .user-data .option{
-    margin-right: 20px;
     color: #344e81;
+	cursor: pointer;
+	position:relative;
 }
+/* animacion de arriba hacia abajo (para cambiar la orientacion cambiar top x bottom)*/
+.user-data .option:after {
+    content: "";
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:0px;
+    background:#e2e2e2;
+    z-index:-1;
+    transition: height 0.3s;
+}
+.user-data .option:hover:after { height:100%;border-bottom: solid 3px #ccc;}
+/* de izquierda a derecha
 .user-data .option{
-    cursor: pointer;
+    color: #344e81;
+	cursor: pointer;
+	transition: background-position .5s;
+	background-size: 200% 100%;
+	background-image: linear-gradient(to right, #fff 50%, #e2e2e2 50%);
 }
+.user-data .option:hover{
+    border-bottom: solid 3px #ccc;
+	background-position: -100% 0;
+}
+*/
+
 header h2{
     margin-left: 20px;
 }
@@ -386,7 +410,7 @@ table{
 .prod-status thead, .schedule-input thead, .schedule-edit thead{
     display: block;
 }
-td input {width: 90%;}
+td input {width: 82%;}
 /* tanaño de columnas main */
 .prod-status td:nth-child(1), .prod-status th:nth-child(1) { min-width: 130px; }
 .prod-status td:nth-child(2), .prod-status th:nth-child(2) { min-width: 130px; }
@@ -403,14 +427,15 @@ td input {width: 90%;}
 .schedule-input td:nth-child(4), .schedule-input th:nth-child(4) { width: 100px; }
 .schedule-input td:nth-child(5), .schedule-input th:nth-child(5) { width: 200px; }
 /* tamaño de columnas schedule-edit */
-
 .schedule-edit td:nth-child(1), .schedule-edit th:nth-child(1), 
 .schedule-edit td:nth-child(2), .schedule-edit th:nth-child(2) { min-width: 50px; }
 .schedule-edit td:nth-child(3), .schedule-edit th:nth-child(3) { width: 100px; }
 .schedule-edit td:nth-child(4), .schedule-edit th:nth-child(4) { width: 200px; }
 .schedule-edit td:nth-child(5), .schedule-edit th:nth-child(5) { width: 100px; }
-.schedule-edit td:nth-child(6), .schedule-edit th:nth-child(6) { width: 100px; }
+.schedule-edit td:nth-child(6), .schedule-edit th:nth-child(6) { width: 60px; }
 .schedule-edit td:nth-child(7), .schedule-edit th:nth-child(7) { width: 200px; }
+/* tamaño columnas delivery */
+.deliv-table td:nth-child(3), .deliv-table th:nth-child(3) { width: 180px; }
 /* Tamaño options purchase order */ 
 .po select, .po input[type='text']{width: 160px;}
 .ml-10, .user-menu{ margin-left: 10px;}
@@ -436,7 +461,7 @@ table tbody tr:hover {
 .user-req{color: #344e81}
 
 /* popup*/ 
-.popup{
+.popup, .popup2{
     background: rgba(65, 65, 65, 0.65);
     opacity: 1;
     position:fixed;
