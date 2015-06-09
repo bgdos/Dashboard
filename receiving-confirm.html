@@ -1,21 +1,22 @@
-<content class="po">
+<content>
     <div class="filter f2">
-        <h4 class="title">Delivery (Confirm)</h4>
+        <h4 class="title">Receiving (Confirm)</h4>
         <hr>
 		<label class="margin-left">Packing No.</label>
-        <input type="text" placeholder="Packing number" id="packing-no">  
-		<input type="button" onclick="" value="Find">  
-		<input type="button" value="Save" onclick="" class="btn-save">
+        <input type="text" placeholder="Packing number" id="p-no">  
+		<input type="button" id="btn-find" onclick="clickDelivery()" value="Find">  
+		<input type="button" value="Save" onclick="ReceivingSaveInit()" class="btn-save">
     </div>
-    <table>
+    <table class="deliv-table">
         <thead>
             <tr>
-                <th>No.</th>
+                <th><input id="checkSchedule"  onclick="checkAll(this)" type="checkbox"></th>
                 <th>PO</th>
                 <th>SAP No.</th>
                 <th>Description</th>
                 <th>PO Qty</th>
                 <th>Line</th>
+                <th>Prod. Qty</th>
                 <th>Deliv. Date</th>
 				<th>Deliv. Qty</th>
 				<th>Pack Qty</th>
