@@ -338,7 +338,40 @@
 					array_push($mat, new Material($id));
 				//regresar resultado
 				return $mat;//regresamos el resultado
-				}
+				}	
 		}
-	}
+		public static function DeliveryConfirm()
+		{
+			 $argumentos = func_get_args();
+			if (func_num_args()==1)
+			{
+				//arreglos
+				$ids = array();
+				$mat = array();
+				//instruccion
+				$instruccion = 'SELECT id FROM delivery where packing = ? AND statusId = 1';
+				//abrimos conexion
+				parent::abrirConexion();
+				//preparar comando
+				$comando = parent::$conexion->prepare($instruccion);
+				$comando->bind_param('s', $argumentos[0]);
+				//ejecutar comando
+				$comando->execute();
+				//ligar resultado
+				$comando->bind_result($id);
+				//llenar arreglo de ids
+				while ($comando->fetch()) array_push($ids, $id);
+				//cerrar comando
+				mysqli_stmt_close($comando);
+				//cerrar conexion
+				parent::cerrarConexion();
+				//llenar arreglo 
+				foreach ($ids as $id)
+					array_push($mat, new Delivery($id));
+				//regresar resultado
+				return $mat;//regresamos el resultado
+				}
+			
+		}
+	}			
 ?>
