@@ -9,11 +9,11 @@
 		private $id;
 		private $qty;
 		private $pDate;
-		private $modelId;
-		private $materialId;
-		private $daily;
-		private $sum;
-		private $packing;
+        private $modelId;
+        private $materialId;
+        private $daily;
+        private $sum = 0;
+        private $packing;
 		
 		//propiedades
 		public function getId() { return $this->id; }
@@ -54,15 +54,26 @@
 				//abrir conexión a servidor
 				parent::abrirConexion();
 				//comando de SQL
-				$instruccion = "select qty, d_date, model_id, material_id, packing from delivery where id = ?";
-				//comando
-				$comando = parent::$conexion->prepare($instruccion);
-				//parámetros
-				$comando->bind_param('i', $id);
+                if (is_int($id)){
+                    $instruccion = "select id, qty, d_date, model_id, material_id, packing from delivery where id = ?";
+                    //comando
+                    $comando = parent::$conexion->prepare($instruccion);
+                    //parámetros
+                    $comando->bind_param('i', $id);
+                } 
+                else{
+                    $instruccion = "select id, qty, d_date, model_id, material_id, packing from delivery where packing = ?
+AND statusId = 1";
+                    //comando
+                    $comando = parent::$conexion->prepare($instruccion);
+                    //parámetros
+                    $comando->bind_param('s', $id);
+                }
+                    
 				//ejecutar comando
 				$comando->execute();
 				//resultado
-				$comando->bind_result($qty, $pDate, $modelId, $materialId, $packing);
+				$comando->bind_result($id, $qty, $pDate, $modelId, $materialId, $packing);
 				//leer datos 
 				$encontro = $comando->fetch();
 				//cerrar comando
@@ -78,6 +89,7 @@
                     $this->modelId = new Model($modelId);
                     $this->materialId = new Material($materialId);
                     $this->packing  = $packing;
+					$this->sum = 0;
 				}
 				else
 				{
@@ -87,14 +99,14 @@
                     $this->modelId = new Model();
                     $this->materialId = new Material();
                     $this->packing  = '';
+					$this->sum = 0;
 				}	
 			}
-             else if (func_num_args()==2)
+             if (func_num_args()==2)
 		      {
                  if (is_int($argumentos[0]))
                  {
-                     //comando de SQL
-                    $instruccion = 'SELECT SUM(CASE WHEN model_id = ? AND d_date = ? THEN qty else 0 END) AS daily, SUM(CASE WHEN model_id = ? THEN qty ELSE 0 END) AS total
+                    $instruccion = 'SELECT SUM(CASE WHEN model_id = ? AND d_date = ? AND statusid = 2 THEN qty else 0 END) AS daily, SUM(CASE WHEN model_id = ? AND statusid = 2 THEN qty ELSE 0 END) AS total
     FROM delivery; ';
                     //abrimos conexion
                     parent::abrirConexion();
@@ -105,35 +117,32 @@
                  if (is_string($argumentos[0]))
                  {
                      //comando de SQL
-                    $instruccion = 'SELECT SUM(CASE WHEN d_date = ? AND material_Id = ? THEN qty else 0 END) AS daily, SUM(CASE WHEN material_Id = ? THEN qty ELSE 0 END) AS total
+                    $instruccion = 'SELECT SUM(CASE WHEN d_date = ? AND material_Id = ? AND statusid = 2 THEN qty else 0 END) AS daily, (SUM(CASE WHEN material_Id = ? AND statusid = 2 THEN qty ELSE 0 END) - SUM(CASE WHEN d_date > ? AND material_Id = ? THEN qty else 0 END))  AS total
     FROM delivery; ';
                     //abrimos conexion
                     parent::abrirConexion();
                     //preparar comando
                     $comando = parent::$conexion->prepare($instruccion);
-                    $comando->bind_param('sii', $argumentos[0], $argumentos[1], $argumentos[1]);
+                    $comando->bind_param('siisi', $argumentos[0], $argumentos[1], $argumentos[1], $argumentos[0], $argumentos[1]);
                  }
 				
-                //ejecutar comando
-                $comando->execute();
-                //ligar resultado
-                $comando->bind_result($daily,$sum);
-               //leer datos 
-				$encontro = $comando->fetch();
-                mysqli_stmt_close($comando);
-                //cerrar conexion
-                parent::cerrarConexion();
-                    if($encontro)
-                    {
-                        $this->daily = $daily;
-                        $this->sum = $sum;
-                    }
+					//ejecutar comando
+					$comando->execute();
+					//ligar resultado
+					$comando->bind_result($daily,$sum);
+				   //leer datos 
+					$comando->fetch();
+					mysqli_stmt_close($comando);
+					//cerrar conexion
+					parent::cerrarConexion();
+                    if($daily > 0)
+						$this->daily = $daily;
+				 	else
+						$this->daily = 0;
+                    if($sum > 0)
+						$this->sum = $sum;
                     else
-                    {
-                        $this->daily = 0;
-                        $this->sum = 0;
-                    }	
-			
+						$this->sum = 0;
 			}
 			//se recibió dos argumentos, se construye el objeto con los argumentos recibidos
 			if(func_num_args() == 4)
@@ -149,6 +158,24 @@
 		function deliveredQty($id)
 		{
 			$instruccion = "SELECT sum(qty) FROM delivery WHERE material_id = ? AND statusId = 2;";
+			parent::abrirConexion();
+			$comando = parent::$conexion->prepare($instruccion);
+			$comando->bind_param('i', $id);
+			$comando->execute();
+			$comando->bind_result($producedQty);
+			//leer datos 
+			$encontro = $comando->fetch();
+			//cerrar comando
+			mysqli_stmt_close($comando);
+			//cerrar conexion
+			if ($producedQty > 0)
+				return $producedQty;
+			else
+				return 0;
+		}
+        function deliveredQty2($id)
+		{
+			$instruccion = "SELECT sum(qty) FROM delivery WHERE material_id = ?;";
 			parent::abrirConexion();
 			$comando = parent::$conexion->prepare($instruccion);
 			$comando->bind_param('i', $id);
