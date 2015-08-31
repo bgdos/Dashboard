@@ -1,7 +1,9 @@
 <?php 
-  require_once('../clases/material.php');
-  require_once('../clases/produced.php');
-  header('Access-Control-Allow-Origin: *');
+	require_once('../clases/material.php');
+	require_once('../clases/produced.php');
+	header('Access-Control-Allow-Origin: *');
+    date_default_timezone_set('America/Tijuana');
+    $date = date('Y-m-d');
     if (isset($_POST['materials']))
 	{
 		 $materials = $_POST['materials'];
@@ -13,7 +15,7 @@
 			{
 				$m = new Material($materials[$i]['material']);
 				$instruccion .= "INSERT INTO produced (qty, p_date, model_id, material_id)";
-				$instruccion .= "values(". $materials[$i]['qty'] .", now(), ". $m->getModelId()->getId().", ". $materials[$i]['material'].")";
+				$instruccion .= "values(". $materials[$i]['qty'] .", '". $date ."', ". $m->getModelId()->getId().", ". $materials[$i]['material'].");";
 			
 			}
 			if ($p->SaveProduced($instruccion) === true)
