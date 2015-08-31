@@ -6,18 +6,18 @@
         <input type="month" id="month" onchange="productionSchedule()">
         <label>Select Line:</label>
         <select id="line" onchange="productionSchedule()"  required>
-		<option value="">--</option>
-		<option value="1" >A</option>
-		<option value="2">B</option>
-		<option value="3">C</option><option value="H">H</option></select>
-	<input type="button" id="btn-find" value="Find" onclick="productionSchedule()">
-	<input type="button" onclick="ScheduleDelete()" value="Delete Checked" class="right">
+			<option value="">--</option>
+			<option value="1" >A</option>
+			<option value="2">B</option>
+			<option value="3">C</option><option value="H">H</option></select>
+        <input type="button" id="btn-find" value="Find" onclick="productionSchedule()">
+		<input type="button" onclick="ScheduleDelete()" value="Delete Checked" class="right">
     </div>
     <table>
         <thead>
             <tr>
                 <th>No.</th>
-                <th><input id="checkSchedule" type="checkbox" onclick="checkAll()" ></th>
+                <th><input id="checkSchedule" type="checkbox" onclick="checkAll(this)" ></th>
                 <th>Model</th>
                 <th>Owner</th>
                 <th>Lot</th>
