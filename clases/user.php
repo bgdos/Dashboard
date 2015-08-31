@@ -137,7 +137,7 @@
 			if (parent::$conexion -> multi_query($instruccion)=== true)
 				echo '{ "status" : 0, "message" : "Data added successfully." }';
 			else 
-				echo '{ "status" : 1, "message" : "Error." }';
+				echo '{ "status" : 1, "message" : "Error! saving data, please check if the user doesn&#39t exist." }';
 			parent::cerrarConexion();
 		}
         function editUser($instruccion)// recibe una cadena de texto con uno o varios registros.
