@@ -1,4 +1,24 @@
 <!DOCTYPE HTML>
+<!--The MIT License (MIT)
+
+Copyright (c) ${06/25/2015} ${Juan Salgado} ${Fausto Serrano}
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORTOR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.-->
 <html>
 <head>
     <title>Outsourcing Production Dashboard | Hyundai Translead</title>
@@ -25,6 +45,7 @@
         <div class="user-data">
             <a>Hello, <span id="user-name"></span>!</a>
             <a href="javascript:updateProfile();" class="option"><img src="images/user_20.png">My Profile</a>
+			<a id='trigger' onclick="weather();" class="option"><img src="images/Weather.png">Weather</a>
 			<a onclick="cerrarSesion();" class="option"><img src="images/lock_closed_20.png">Log out</a>
         </div>
     </header>
@@ -32,8 +53,10 @@
         <nav class="main-menu" >
             <ul>
                 <li><a href="main.html" class="active">Dashboard</a></li>
+				<li><a href="schedule.html">Schedule</a></li>
                 <li><a href="daily-report.html">Daily Report</a></li>
-                <li><a href="adminht.html">Administration</a></li>
+				<li><a href="discrepancy-report.html">Discrepancy Report</a></li>
+                <li id="menuAdmin"><a href="adminht.html">Administration</a></li>
             </ul>
         </nav>
         <div class="detail">
@@ -94,7 +117,7 @@
                     <h2 class="infod"><span id="sl-dd" class="sumd">0 /</span><span id="sl-td"> 0</span></h2>
                 </div>
             </div>
-            <div class="detail-wrap" onclick="onclickSubassyDetail('X-MEN FWD')">
+            <div class="detail-wrap" onclick="onclickSubassyDetail('X-MEM FWD')">
                 <h2 class="detail-sub">X-Mem FWD</h2>
                 <div><h2>Produced</h2>
                     <h2 class="sum">Daily / Sum</h2>
@@ -105,7 +128,7 @@
                     <h2 class="infod"><span id="xf-dd" class="sumd">0 /</span><span id="xf-td"> 0</span></h2>
                 </div>
             </div>
-            <div class="detail-wrap" onclick="onclickSubassyDetail('X-MEN DROP')">
+            <div class="detail-wrap" onclick="onclickSubassyDetail('X-MEM DROP')">
                 <h2 class="detail-sub">X-Mem Drop</h2>
                 <div><h2>Produced</h2>
                     <h2 class="sum">Daily / Sum</h2>
@@ -127,8 +150,92 @@
                     <h2 class="infod"><span id="fp-dd" class="sumd">0 /</span><span id="fp-td"> 0</span></h2>
                 </div>
             </div>
+            <div class="detail-wrap" onclick="onclickSubassyDetail('PINTLE HOOK')">
+                <h2 class="detail-sub">Pintle Hook</h2>
+                <div><h2>Produced</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infop"><span id="ph-dp" class="sumd">0 /</span><span id="ph-tp"> 0</span></h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infod"><span id="ph-dd" class="sumd">0 /</span><span id="ph-td"> 0</span></h2>
+                </div>
+            </div>
+            <div class="detail-wrap" onclick="onclickSubassyDetail('X-MEMBER ASSY')">
+                <h2 class="detail-sub">X-Member Assy</h2>
+                <div><h2>Produced</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infop"><span id="xa-dp" class="sumd">0 /</span><span id="xa-tp"> 0</span></h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infod"><span id="xa-dd" class="sumd">0 /</span><span id="xa-td"> 0</span></h2>
+                </div>
+            </div>
+            <div class="detail-wrap" onclick="onclickSubassyDetail('TRANSITION ASSY')">
+                <h2 class="detail-sub">Transition Assy</h2>
+                <div><h2>Produced</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infop"><span id="ta-dp" class="sumd">0 /</span><span id="ta-tp"> 0</span></h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infod"><span id="ta-dd" class="sumd">0 /</span><span id="ta-td"> 0</span></h2>
+                </div>
+            </div>
+            <div class="detail-wrap" onclick="onclickSubassyDetail('TIRE BOX')">
+                <h2 class="detail-sub">Tire Box</h2>
+                <div><h2>Produced</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infop"><span id="tb-dp" class="sumd">0 /</span><span id="tb-tp"> 0</span></h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infod"><span id="tb-dd" class="sumd">0 /</span><span id="tb-td"> 0</span></h2>
+                </div>
+            </div>
+            <div class="detail-wrap" onclick="onclickSubassyDetail('ROLLER CONVEYOR')">
+                <h2 class="detail-sub">Roller Conveyor</h2>
+                <div><h2>Produced</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infop"><span id="rc-dp" class="sumd">0 /</span><span id="rc-tp"> 0</span></h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infod"><span id="rc-dd" class="sumd">0 /</span><span id="rc-td"> 0</span></h2>
+                </div>
+            </div>
+            <div class="detail-wrap" onclick="onclickSubassyDetail('BASE ASSY')">
+                <h2 class="detail-sub">Base Assy</h2>
+                <div><h2>Produced</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infop"><span id="ba-dp" class="sumd">0 /</span><span id="ba-tp"> 0</span></h2>
+                </div>
+                <div><h2>Delivered</h2>
+                    <h2 class="sum">Daily / Sum</h2>
+                    <h2 class="infod"><span id="ba-dd" class="sumd">0 /</span><span id="ba-td"> 0</span></h2>
+                </div>
+            </div>
         </div>
     </div>
+	<div class="weather">
+		<div id="cont_a84362bf64b9cb3fd3e91025b5712f1a">
+			<center>
+				<span id="h_a84362bf64b9cb3fd3e91025b5712f1a">
+					<a id="a_a84362bf64b9cb3fd3e91025b5712f1a" href="http://www.theweather.com/" target="_blank" rel="nofollow">Tijuana Weather</a>
+				</span>
+			</center>
+  		<script type="text/javascript" async src="http://www.theweather.com/wid_loader/a84362bf64b9cb3fd3e91025b5712f1a"></script>
+		</div>
+	</div>
+    <footer style="display:none;">
+        <center>
+            <p>Hyundai Outsourcing Production Dashboard was developed by 
+                <a href="mailto:faus_ss89@hotmail.com">Fausto Serrano</a> and 
+                <a href="mailto:juansalgado@outlook.com">Juan Salgado</a> 
+                for Hyundai Translead, 2015 &copy;</p>
+        </center>   
+    </footer>
 </body>
 	<div class="processing">
         <center>
