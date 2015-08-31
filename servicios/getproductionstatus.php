@@ -40,7 +40,7 @@
 										"modelNumber" : '.$model->getNumber().',
 										"lot" : '.$model->getLot().',
 										"material" : 0,
-										"description" : "none",
+										"description" : "'.$sta->getDescription().'",
 										"dailyP" : 0,
 										"sumP" : 0,
 										"dailyD" : 0,
