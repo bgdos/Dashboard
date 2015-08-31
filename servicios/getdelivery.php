@@ -22,7 +22,7 @@
                                     "date" : "'.$m->getPoId()->getDate().'",
                                     "produced" : '.$produced->producedQty($m->getId()).',
 									"delivered" : '.$delivered->deliveredQty($m->getId()).',';
-                                    $max = $produced->producedQty($m->getId()) - $delivered->deliveredQty($m->getId());
+                                    $max = $produced->producedQty($m->getId()) - $delivered->deliveredQty2($m->getId());
                 
                                    $json .= ' "max" : '.$max.'
                             }';
