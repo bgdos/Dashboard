@@ -1,4 +1,24 @@
 <!DOCTYPE HTML>
+<!--The MIT License (MIT)
+
+Copyright (c) ${06/25/2015} ${Juan Salgado} ${Fausto Serrano}
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORTOR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.-->
 <html>
 <head>
     <title>Outsourcing Production Dashboard | Hyundai Translead</title>
@@ -10,7 +30,7 @@
     <link href="css/style.css" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
     <script src="js/progress.js"></script>
-    <script src="js/jquery.tablesorter.js"></script>
+    <script src="js/jquery.dataTables.js"></script>
     <script src="js/funciones.js"></script>
     <script src="js/login.js"></script>
     <script src="js/servicios.js"></script>
@@ -24,6 +44,7 @@
         <div class="user-data">
             <a>Hello, <span id="user-name"></span>!</a>
 			<a href="javascript:updateProfile();" class="option"><img src="images/user_20.png">My Profile</a>
+			<a id='trigger' onclick="weather();" class="option"><img src="images/Weather.png">Weather</a>
 			<a onclick="cerrarSesion();" class="option"><img src="images/lock_closed_20.png">Log out</a>
         </div>
     </header>
@@ -31,7 +52,9 @@
         <nav class="main-menu">
             <ul>
                 <li id="menuDashboard"><a href="#" class="active">Dashboard</a></li>
+				<li><a href="schedule.html">Schedule</a></li>
                 <li id="menuDaily"><a href="daily-report.html">Daily Report</a></li>
+				<li><a href="discrepancy-report.html">Discrepancy Report</a></li>
                 <li id="menuAdmin"><a href="adminht.html">Administration</a></li>
             </ul>
         </nav>
@@ -40,7 +63,7 @@
                 <h4>Filters</h4>
                 <hr>
                 <label>Month:</label>
-                <input type="month" min="2015-05" value="2015-05" id="month" onchange="productionSchedule()">
+                <input type="month" min="2015-05" id="month" onchange="productionSchedule()">
                 <label>Line:</label>
                 <select onchange="productionSchedule()" id="line">
                     <option value="">--</option>
@@ -71,6 +94,23 @@
             </table>
         </div>
     </div>
+	<div class="weather">
+		<div id="cont_a84362bf64b9cb3fd3e91025b5712f1a">
+			<center>
+				<span id="h_a84362bf64b9cb3fd3e91025b5712f1a">
+					<a id="a_a84362bf64b9cb3fd3e91025b5712f1a" href="http://www.theweather.com/" target="_blank" rel="nofollow">Tijuana Weather</a>
+				</span>
+			</center>
+  		<script type="text/javascript" async src="http://www.theweather.com/wid_loader/a84362bf64b9cb3fd3e91025b5712f1a"></script>
+		</div>
+	</div>
+    <footer>
+        <center>
+            <p>Hyundai Dashboard was developed by : 
+                <a href="mailto:faus_ss89@hotmail.com">Fausto Serrano</a> and 
+                <a href="mailto:juansalgado@outlook.com">Juan Salgado</a> for Hyundai Translead</p>
+        </center>  
+    </footer>
 </body>
     <div class="processing">
         <center>
