@@ -4,9 +4,9 @@
 	require_once('../clases/delivery.php');
     header('Access-Control-Allow-Origin: *');
     
-    if (isset($_GET['model']))
+    if (isset($_GET['po']) & isset($_GET['subcontractor']))
         {
-            $mat = Catalogo :: MateriaProduction($_GET['model']);
+            $mat = Catalogo :: MaterialProduction($_GET['po'], $_GET['subcontractor']);
             $json = '{"materials" : [';
 		    $primero =  true;
             foreach($mat as $m)
