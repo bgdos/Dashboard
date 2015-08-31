@@ -13,7 +13,7 @@
         private $materialId;
         private $daily;
         private $sum;
-		
+
 		//propiedades
 		public function getId() { return $this->id; }
 		public function setId($value) { $this->id = $value; }
@@ -101,13 +101,13 @@
                  else
                  {
                      //comando de SQL
-                    $instruccion = 'SELECT SUM(CASE WHEN p_date = ? AND material_Id = ? THEN qty else 0 END) AS daily, SUM(CASE WHEN material_Id = ? THEN qty ELSE 0 END) AS total
+                    $instruccion = 'SELECT SUM(CASE WHEN p_date = ? AND material_Id = ? THEN qty else 0 END) AS daily, (SUM(CASE WHEN material_Id = ? THEN qty ELSE 0 END) - SUM(CASE WHEN p_date > ? AND material_Id = ? THEN qty else 0 END))  AS total
     FROM produced; ';
                     //abrimos conexion
                     parent::abrirConexion();
                     //preparar comando
                     $comando = parent::$conexion->prepare($instruccion);
-                    $comando->bind_param('sii', $argumentos[0], $argumentos[1], $argumentos[1]);
+                    $comando->bind_param('siisi', $argumentos[0], $argumentos[1], $argumentos[1], $argumentos[0], $argumentos[1]);
                  }
                 //ejecutar comando
                 $comando->execute();
