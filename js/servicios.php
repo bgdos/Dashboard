@@ -1,5 +1,14 @@
-
-
+/**
+ * Production Dashboard
+ *
+ * @version 1 (06. 23 June 2015)
+ * @authors Fausto Serrano & Juan Salgado
+ * @requires jQuery, progress, highcharts, jquery.datatables, tooltipster, weather widget (http://www.theweather.com/)
+ * @ 
+ *
+ * 
+ * 
+ */
 //variables
 var urlServer = 'http://localhost:8080/production_dashboard/';
 var urlSchedules = 'servicios/getschedule.php';
@@ -25,8 +34,10 @@ var urlDelivery = 'servicios/getdelivery.php';
 var urlDeliveryUpdate = 'servicios/updatedelivery.php';
 var urlConfirmDelivery = 'servicios/confirmdelivery.php';
 var urlDeliveryConfirm = 'servicios/getdeliveryconfirm.php';
+var urlGetDiscrepancy = 'servicios/getdiscrepancy.php';
 var urlUser = 'servicios/getuser.php';
 var urlDeleteUser = 'servicios/deleteuser.php';
+var urlGetPackingList = 'servicios/getpackinglist.php';
 var prueba = 'prueba.php';
 var token ='';
 var x = new XMLHttpRequest();
@@ -82,22 +93,25 @@ function loadDaily(date,subcontractor)
 }
 function loadModelDetail(idModel)
 {
-		date();
-        var url = urlServer + urlProductionStatus +'?date='+sessionStorage.date+'&Model='+idModel;
-			x.open('GET', url, true);
-			x.onreadystatechange = function()
-			{
-				if (x.status == 200 & x.readyState == 4)
-				{
-					var respuesta = x.responseText;
-					//parsear a JSON
-					var respuestaJSON = JSON.parse(respuesta);
-					var materials = respuestaJSON.materials;
-					productionStatus(materials);
-                    
-				}
-			}
-				x.send();
+    var detailModelId = document.getElementById('detailModelId');
+	detailModelId.innerHTML = sessionStorage.modelnumber +' x '+sessionStorage.lot + ' Units' ;
+    date();
+
+    var url = urlServer + urlProductionStatus +'?date='+sessionStorage.date+'&Model='+idModel;
+        x.open('GET', url, true);
+        x.onreadystatechange = function()
+        {
+            if (x.status == 200 & x.readyState == 4)
+            {
+                var respuesta = x.responseText;
+                //parsear a JSON
+                var respuestaJSON = JSON.parse(respuesta);
+                var materials = respuestaJSON.materials;
+                productionStatus(materials);
+
+            }
+        }
+            x.send();
 }
 function loadSubAssyDetail(idmodel, description)
 {
@@ -130,7 +144,7 @@ function ScheduleAdd(data)
 					 console.log(response.message);
 			 		 closeprocessing();
 					 $( ".ajax" ).load( "schedule-input.html");
-					 popInfo('Schedule Information', response.message, 3000);
+					 popInfo('Information', response.message, 3000);
 			 		
 				 }
 				});
@@ -233,8 +247,11 @@ function purchaseOrder()
 						if (sessionStorage.subcontractor == po[0].subcontractor)
 							{
 								openprocessing();
-								//alert(po[0].subcontractor);
-								purchaseOrderEdit(po);
+								if (sessionStorage.option == 1)
+									purchaseOrderEdit(po);
+								if (sessionStorage.option == 2)
+									purchaseOrderDelete(po);
+								
 							}
 						else
 							popInfo('Information','PO not found!');
@@ -263,7 +280,15 @@ function poAdd(data)
 					 console.log(response.message);
 			 		 closeprocessing();
 			 		 if (response.status ==0)
-					 	{$( ".ajax" ).load( "po-new.html");MaterialDescription();}
+					 {
+					 	$( ".ajax" ).load( "po-new.html", function() {
+							var dates = document.querySelectorAll('input[type=date]')
+							for (var i = 0; i < dates.length; i++)
+								dates[i].value = date();
+
+						});
+						MaterialDescription();
+					 }
 					 popInfo('Information', response.message, 3000);
 			 		
 				 }
@@ -330,9 +355,9 @@ function poDelete(id)
 			}
 				x.send();
 }
-function materialProduction(model)
+function materialProduction(po)
 {
-        var url = urlServer + urlMaterialProduction + "?model=" + model;
+        var url = urlServer + urlMaterialProduction + "?po=" + po +"&subcontractor=" + sessionStorage.subcontractor;
 			x.open('GET', url, true);
 			x.onreadystatechange = function()
 			{
@@ -349,7 +374,7 @@ function materialProduction(model)
 					else
 					{
 						closeprocessing();
-						popInfo('Information','Model not found!');
+						popInfo('Information','PO not found!');
 					}
 				}
 			}
@@ -403,7 +428,10 @@ function DeliverySave (data) {
 					if (sessionStorage.option == 4)
 					{
 						var packing = data[0]["packing"];
-						$( ".ajax" ).load( "receiving-confirm.html");
+						$( ".ajax" ).load( "receiving-confirm.html", function() {
+                            enterbutton('btn-find');
+                            packingList();
+                        });
 					}
 				}
 			 popInfo('Information', response.message, 3000);
@@ -422,7 +450,13 @@ function delivery(po)
 					//parsear a JSON
 					var respuestaJSON = JSON.parse(respuesta);
 					var materials = respuestaJSON.materials;
-                    productionConfirm(materials);
+                    if (materials.length > 0)
+                    	productionConfirm(materials);
+					else
+					{
+						closeprocessing();
+						popInfo('Information', 'PO not found or is closed.');
+					}
 				}
 			}
 				x.send();
@@ -439,7 +473,13 @@ function deliveryConfirm(packing)
 					//parsear a JSON
 					var respuestaJSON = JSON.parse(respuesta);
 					var materials = respuestaJSON.materials;
-                    productionConfirm(materials);
+					if (materials.length > 0)
+                    	productionConfirm(materials);
+					else
+					{
+						closeprocessing();
+						popInfo('Information', 'Packing list not found or is closed.');
+					}
 				}
 			}
 				x.send();
@@ -507,39 +547,63 @@ function editUser()
 	var email2,  password, name, lastname, typeId, subcontractor;
         var userArray = [];
 
-        if (document.getElementById('passwordEdit').value != null)
-            password= document.getElementById('passwordEdit').value;
+        if (document.getElementById('password').value != null)
+            password= document.getElementById('password').value;
         else
             password = '';
-		email2 = document.getElementById('email').value;
-        name = document.getElementById('name').value;
-        lastname = document.getElementById('lastname').value;
-        typeId = document.getElementById('selectType').value;
-        subcontractor = document.getElementById('selectSubcontractor').value;
-    
-        if (email != '' & email2 != ''  & name != '' & lastname != '' & typeId > 0 & subcontractor > 0 )
-            {	
-                userArray.push({email: email, password : password, name: name, lastname: lastname, typeId: typeId, subcontractor: subcontractor, email2 : email2});
-            }
-        else
+	
+	email2 = document.getElementById('email').value;
+	name = toTitleCase(document.getElementById('name').value);
+	lastname = toTitleCase(document.getElementById('lastname').value);
+	typeId = document.getElementById('selectType').value;
+	subcontractor = document.getElementById('selectSubcontractor').value;
+	if (document.getElementById('div-subcontractor').style.display == 'none')
+		subcontractor = '0';
+	
+	
+
+	if (email != '' & email2 != ''  & name != '' & lastname != '' & typeId > 0 & subcontractor != '' )
+		{	
+			userArray.push({email: email, password : password, name: name, lastname: lastname, typeId: typeId, subcontractor: subcontractor, email2 : email2});
+		}
+	else
+		{
+			closeprocessing();
+		}
+var url = urlServer + urlUpdateUser;
+	 $.ajax({ type: "POST",
+	 url: url,
+	 data: {user : userArray},//no need to call JSON.stringify etc... jQ does this for you
+	 cache: false,
+	 success: function(response){//check response: it's always good to check server output when developing...
+				 response = JSON.parse(response);
+				 console.log(response.message);
+				if (response.status ==0)
+					{$( ".ajax" ).load( "user-edit.html")}
+				 closeprocessing();
+				 popInfo('Information', response.message);
+
+			 }
+			});
+}
+function loadUsers()
+{
+    openprocessing();
+    var url = urlServer + urlUser;
+        x.open('GET', url, true);
+        x.onreadystatechange = function()
+        {
+            if (x.status == 200 & x.readyState == 4)
             {
-                closeprocessing();
+                var respuesta = x.responseText;
+                //parsear a JSON
+                var respuestaJSON = JSON.parse(respuesta);
+                var users = respuestaJSON.users;
+                userListInfo(users);
+
             }
-	var url = urlServer + urlUpdateUser;
-		 $.ajax({ type: "POST",
-		 url: url,
-		 data: {user : userArray},//no need to call JSON.stringify etc... jQ does this for you
-		 cache: false,
-		 success: function(response){//check response: it's always good to check server output when developing...
-			 		 response = JSON.parse(response);
-					 console.log(response.message);
-			 		if (response.status ==0)
-					 	{$( ".ajax" ).load( "user-edit.html")}
-			 		 closeprocessing();
-					 popInfo('Information', response.message);
-			 		
-				 }
-				});
+        }
+            x.send();
 }
 function updateProfilePassword(password, email)
 {
@@ -553,6 +617,55 @@ function updateProfilePassword(password, email)
 					//parsear a JSON
 					var respuestaJSON = JSON.parse(respuesta);
 					popInfo('My Profile', respuestaJSON.message);
+				}
+			}
+				x.send();
+}
+function discrepancyReport()
+{
+	var date = document.getElementById('date').value;
+	var date2 = document.getElementById('date2').value;
+	if (date == '')
+		popInfo('Error', 'Please select a date or a range')
+	if (date2 != '')
+        var url = urlServer + urlGetDiscrepancy + "?date=" + date + "&date2=" + date2;
+	else
+		var url = urlServer + urlGetDiscrepancy + "?date=" + date;
+			x.open('GET', url, true);
+			x.onreadystatechange = function()
+			{
+				if (x.status == 200 & x.readyState == 4)
+				{
+					var respuesta = x.responseText;
+					//parsear a JSON
+					var respuestaJSON = JSON.parse(respuesta);
+					discrepancyChart(respuestaJSON.subcontractors, date, date2);
+				}
+			}
+				x.send();
+}
+function packingList()
+{
+        var url = urlServer + urlGetPackingList;
+			x.open('GET', url, true);
+			x.onreadystatechange = function()
+			{
+				if (x.status == 200 & x.readyState == 4)
+				{
+					var respuesta = x.responseText;
+					//parsear a JSON
+					var respuestaJSON = JSON.parse(respuesta);
+                    if (respuestaJSON.status > 0)
+                    {
+                        var po = document.getElementById('p-no');
+                        var packings = respuestaJSON.packings;
+                        for (var i=0; i < packings.length; i++)
+                        {
+                            var option = document.createElement ("option");
+                            option.innerHTML = packings[i].packing;
+                            po.appendChild(option);
+                        }
+                    }
 				}
 			}
 				x.send();
