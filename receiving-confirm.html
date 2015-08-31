@@ -3,7 +3,9 @@
         <h4 class="title">Receiving (Confirm)</h4>
         <hr>
 		<label class="margin-left">Packing No.</label>
-        <input type="text" placeholder="Packing number" id="p-no">  
+        <select placeholder="Packing number" id="p-no" style="width:150px">
+            <option>- - - - - - - - - -</option>
+        </select>  
 		<input type="button" id="btn-find" onclick="clickDelivery()" value="Find">  
 		<input type="button" value="Save" onclick="ReceivingSaveInit()" class="btn-save">
     </div>
@@ -12,6 +14,7 @@
             <tr>
                 <th><input id="checkSchedule"  onclick="checkAll(this)" type="checkbox"></th>
                 <th>PO</th>
+                <th>Company</th>
                 <th>SAP No.</th>
                 <th>Description</th>
                 <th>PO Qty</th>
