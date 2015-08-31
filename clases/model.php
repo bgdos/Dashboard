@@ -123,5 +123,14 @@
 				echo '{ "status" : 1, "message" : "Error updating data." }';
 			parent::cerrarConexion();
 		}
+        function updateModelStatus($instruccion)// recibe una cadena de texto con uno o varios registros.
+			{
+			parent::abrirConexion();
+			if (parent::$conexion -> multi_query($instruccion)=== true)
+				return '{ "status" : 0, "message" : "Data updated successfully." }';
+			else 
+				return '{ "status" : 1, "message" : "Error updating data." }';
+			parent::cerrarConexion();
+		}
 	}
 ?>
