@@ -12,14 +12,14 @@
 			{
 				
 				$instruccion .= "INSERT INTO model (line_id, number,owner, lot, sdate, status_id)";
-				$instruccion .= "values(". $model[$i]['line'] .", ". $model[$i]['model'] .", '". $model[$i]['owner'] ."', ". $model[$i]['lot']. ", '". $model[$i]['date'].", 1');";
+				$instruccion .= "values(". $model[$i]['line'] .", ". $model[$i]['model'] .", '". $model[$i]['owner'] ."', ". $model[$i]['lot']. ", '". $model[$i]['date']."', 1);";
 			
 			}
 			if ($m->saveSchedule($instruccion) === true)
 				echo '{ "status" : 0, "message" : "Data saved successfully." }';
 		}
 		else
-			echo '{ "status" : 1, "message" : "Error on data saving." }';
+			echo '{ "status" : 1	, "message" : "Error on data saving." }';
     }
 	else
 		echo '{ "status" : 2, "message" : "Error, no data received." }';
