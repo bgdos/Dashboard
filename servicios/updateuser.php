@@ -10,15 +10,22 @@
 			$instruccion ="";
 			$u = new User();
             
-            if ($user[0]['password'] != null)
+            if ($user[0]['password'] == null & $user[0]['subcontractor'] == null)
             {
-				$instruccion .= "update users set email = '".$user[0]['email2'] ."',  password = SHA1( '".$user[0]['password']."'),  name = '".$user[0]['name']."', lastname = '".$user[0]['lastname']."', type_Id = ".$user[0]['typeId'].", subcontractor_Id = ".$user[0]['subcontractor']." where email = '".$user[0]['email']."';";
+				$instruccion .= "update users set email = '".$user[0]['email2'] ."',  password = SHA1( '".$user[0]['password']."'),  name = '".$user[0]['name']."', lastname = '".$user[0]['lastname']."', type_Id = ".$user[0]['typeId']." where email = '".$user[0]['email']."';";
+            }
+            else if ($user[0]['password'] != null & $user[0]['subcontractor'] == null)
+            {
+                $instruccion .= "update users set email = '".$user[0]['email2'] ."',  password = SHA1( '".$user[0]['password']."'),  name = '".$user[0]['name']."', lastname = '".$user[0]['lastname']."', type_Id = ".$user[0]['typeId']." where email = '".$user[0]['email']."';";
+            }
+            else if ($user[0]['password'] == null & $user[0]['subcontractor'] != null)
+            {
+                $instruccion .= "update users set email = '".$user[0]['email2'] ."',  name = '".$user[0]['name']."', lastname = '".$user[0]['lastname']."', type_Id = ".$user[0]['typeId'].", subcontractor_Id = ".$user[0]['subcontractor']." where email = '".$user[0]['email']."';";
             }
             else
             {
-                	$instruccion .= "update users set email = '".$user[0]['email2'] ."',  name = '".$user[0]['name']."', lastname = '".$user[0]['lastname']."', type_Id = ".$user[0]['typeId'].", subcontractor_Id = ".$user[0]['subcontractor']." where email = '".$user[0]['email']."';";
+                $instruccion .= "update users set email = '".$user[0]['email2'] ."',  password = SHA1( '".$user[0]['password']."'),  name = '".$user[0]['name']."', lastname = '".$user[0]['lastname']."', type_Id = ".$user[0]['typeId'].", subcontractor_Id = ".$user[0]['subcontractor']." where email = '".$user[0]['email']."';";
             }
-			
 			
 			if ($u->editUser($instruccion) === true)
 				echo '{ "status" : 0, "message" : "Data updated successfully." }';
@@ -28,4 +35,4 @@
     }
 	else
 		echo '{ "status" : 2, "message" : "Error, no data received." }';
- ?>
+?>
