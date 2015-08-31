@@ -11,7 +11,6 @@
 			for ($i = 0; $i < count($pos); $i++ )
 			{
 				$instruccion .= "update material set number = '".$pos[$i]['number'] ."',  qty = ".$pos[$i]['qty'].",  model_Id = ".$pos[$i]['model']." where id = ".$pos[$i]['id'].";";
-			
 			}
 			if ($m->editPo($instruccion) === true)
 				echo '{ "status" : 0, "message" : "Data updated successfully." }';
