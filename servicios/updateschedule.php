@@ -3,6 +3,7 @@
 	header('Access-Control-Allow-Origin: *');
     date_default_timezone_set('America/Tijuana');
     $date = date('Y-m-d');
+    $status = 0;
     if (isset($_POST['models']))
 	{
 		 $models = $_POST['models'];
@@ -14,9 +15,10 @@
 			{
 				
                 if ($date >= $models[$i]['date'])
-                    $instruccion .= "update model set number = ".$models[$i]['model'] .",  owner = '".$models[$i]['owner']."',  lot = ".$models[$i]['lot'].",  sdate = '".$models[$i]['date']."', line_id =".$models[$i]['line'].", status_id = 2 where id = ".$models[$i]['id'].";";
+                    $status = 2;
                 else
-                    $instruccion .= "update model set number = ".$models[$i]['model'] .",  owner = '".$models[$i]['owner']."',  lot = ".$models[$i]['lot'].",  sdate = '".$models[$i]['date']."', line_id =".$models[$i]['line'].", status_id = 1 where id = ".$models[$i]['id'].";";
+                    $status = 1;
+                $instruccion .= "update model set number = ".$models[$i]['model'] .",  owner = '".$models[$i]['owner']."',  lot = ".$models[$i]['lot'].",  sdate = '".$models[$i]['date']."', line_id =".$models[$i]['line'].", status_id =". $status ."where id = ".$models[$i]['id'].";";
 			
 			}
 			if ($m->editSchedule($instruccion) === true)
