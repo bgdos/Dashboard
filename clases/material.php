@@ -29,45 +29,44 @@
 		public function setPoId($value) { $this->poId = $value; }
         
         public function getTotalQty($value) {
+			if(func_num_args() == 1)
+			{
+				//leer id
+				$id = $value;
+				//abrir conexión a servidor
+				parent::abrirConexion();
+				//comando de SQL
+				$instruccion = "SELECT SUM(qty) FROM material WHERE model_Id=?";
+				//comando
+				$comando = parent::$conexion->prepare($instruccion);
+				//parámetros
+				$comando->bind_param('i', $id);
+				//ejecutar comando
+				$comando->execute();
+				//resultado
+				$comando->bind_result($totalQty);
+				//leer datos 
+				$encontro = $comando->fetch();
+				//cerrar comando
+				mysqli_stmt_close($comando);
+				//cerrar conexion
+				parent::cerrarConexion();
+				//pasar values a los atributos
+				if($encontro)
+				{
+					if($totalQty != null)
+					$this->totalQty = $totalQty;
+					else
+						$this->totalQty = 0;
 
-        if(func_num_args() == 1)
-                        {
-                            //leer id
-                            $id = $value;
-                            //abrir conexión a servidor
-                            parent::abrirConexion();
-                            //comando de SQL
-                            $instruccion = "SELECT SUM(qty) FROM material WHERE model_Id=?";
-                            //comando
-                            $comando = parent::$conexion->prepare($instruccion);
-                            //parámetros
-                            $comando->bind_param('i', $id);
-                            //ejecutar comando
-                            $comando->execute();
-                            //resultado
-                            $comando->bind_result($totalQty);
-                            //leer datos 
-                            $encontro = $comando->fetch();
-                            //cerrar comando
-                            mysqli_stmt_close($comando);
-                            //cerrar conexion
-                            parent::cerrarConexion();
-                            //pasar values a los atributos
-                            if($encontro)
-                            {
-                                if($totalQty != null)
-                                $this->totalQty = $totalQty;
-                                else
-                                    $this->totalQty = 0;
-                                
-                            }
-                            else 
-                            {
-                                $this->totalQty = 0;
-                            }	
+				}
+				else 
+				{
+					$this->totalQty = 0;
+				}	
 
-                            return $this->totalQty; 
-            }
+				return $this->totalQty; 
+			}
         }
 		
 		//constructor
@@ -184,7 +183,7 @@
 		function savePo($instruccion)// recibe una cadena de texto con uno o varios registros.
 		{
 			parent::abrirConexion();
-			if (parent::$conexion -> multi_query($instruccion)=== true)
+			if (parent::$conexion -> multi_query($instruccion) === true)
 				echo '{ "status" : 0, "message" : "Data saved successfully." }';
 			else 
 				echo '{ "status" : 1, "message" : "Error on data saving." }';
