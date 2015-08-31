@@ -11,8 +11,8 @@ require_once('../accesodatos/catalogos.php');
 		    $primero =  true;
             foreach($subassy as $sub)
             {
-                $delivery = new Delivery($sub->getModelId()->getId(), $_GET['date']);
-                $produced = new Produced($sub->getModelId()->getId(), $_GET['date']);
+                $delivery = new Delivery($_GET['date'], $sub->getId());
+                $produced = new Produced($_GET['date'], $sub->getId());
                 if (!$primero) $json .= ','; else $primero = false;
                 $json .= '	{ 
                                     "subcontractor": "'.$sub->getPoId()->getSubcontractorId()->getName().'",
