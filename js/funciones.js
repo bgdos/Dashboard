@@ -4,10 +4,10 @@
  * @version 1 (06. 23 June 2015)
  * @authors Fausto Serrano & Juan Salgado
  * @requires jQuery, progress, highcharts, jquery.datatables, tooltipster, weather widget (http://www.theweather.com/)
- * @see http://workshop.rs
+ * 
  *
- * @param  {Number} percent
- * @param  {Number} $element progressBar DOM element
+ * 
+ * 
  */
 /* 
 *   @Pagina
