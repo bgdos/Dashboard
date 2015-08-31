@@ -2,7 +2,7 @@
     <div class="filter f2">
         <h4 class="title">Production (Adjust)</h4>
         <hr>
-        <input type="number" placeholder="Model number" id="modelNo" class="ml-10" min="0">
+        <input type="number" placeholder="PO number" id="poNo" class="ml-10" min="0">
         <input type="button" id="btn-find" onclick="clickProduction()"  value="Find">        
 		<input type="button" value="Save" onclick="productionSaveInit()" class="btn-save">
     </div>
@@ -16,9 +16,9 @@
                 <th>PO Qty</th>
                 <th>Line</th>
                 <th>Date</th>
-		<th>Prod. Qty</th>
-		<th>Deliv. Qty</th>
-		<th class="adjust-th" title="Input quantity will be the new produced quantity">Adjust Qty to</th>
+				<th>Prod. Qty</th>
+				<th>Deliv. Qty</th>
+				<th class="adjust-th" title="Input quantity will be the new produced quantity">Adjust Qty to</th>
             </tr>
         </thead>
         <tbody id="model-pos">
