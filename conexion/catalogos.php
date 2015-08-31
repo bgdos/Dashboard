@@ -6,6 +6,7 @@
 	require_once('/../clases/produced.php');
 	require_once('/../clases/delivery.php');
 	require_once('/../clases/subassy.php');
+    require_once('/../clases/user.php');
 
 	
 	class Catalogo extends Conexion
@@ -21,7 +22,7 @@
 				$models = array();
 				$date = '%'.$argumentos[0].'%';
 				//instruccion
-				$instruccion = 'SELECT id FROM model WHERE sdate LIKE ? AND status_Id=1 ORDER BY line_Id ASC, sdate';
+				$instruccion = 'SELECT id FROM model WHERE sdate LIKE ? ORDER BY line_Id ASC, sdate';
 				//abrimos conexion
 				parent::abrirConexion();
 				//preparar comando
@@ -50,7 +51,7 @@
 				$date = '%'.$argumentos[1].'%';
 				$models = array();
 				//instruccion
-				$instruccion = "SELECT id FROM model WHERE line_Id = ? AND sdate LIKE ? AND status_Id=1 ORDER BY sdate";
+				$instruccion = "SELECT id FROM model WHERE line_Id = ? AND sdate LIKE ? ORDER BY sdate";
 				//abrimos conexion
 				parent::abrirConexion();
 				//preparar comando
@@ -119,15 +120,20 @@
 			$ids = array();
 			$materials = array();
 			//instruccion
-			$instruccion = "SELECT material_Id FROM produced 
+			$instruccion = "(SELECT produced.material_id FROM produced 
                             JOIN material ON produced.material_Id = material.id 
                             JOIN po ON material.po_id = po.id
-                            WHERE p_date =  ? and  po.subcontractor_Id = ? GROUP BY material_Id";
+                            WHERE p_date =  ? AND  po.subcontractor_Id = ? GROUP BY material_Id)
+UNION
+(SELECT delivery.material_id FROM delivery 
+                            JOIN material ON delivery.material_Id = material.id 
+                            JOIN po ON material.po_id = po.id
+                            WHERE d_date = ? AND  po.subcontractor_Id = ? GROUP BY material_Id)";
 			//abrimos conexion
 			parent::abrirConexion();
 			//preparar comando
 			$comando = parent::$conexion->prepare($instruccion);
-			$comando->bind_param('si', $argumentos[0], $argumentos[1]);
+			$comando->bind_param('sisi', $argumentos[0], $argumentos[1], $argumentos[0], $argumentos[1]);
 			//ejecutar comando
 			$comando->execute();
 			//ligar resultado
@@ -147,38 +153,36 @@
 			
         }
         public static function ModelDetails()
-		{
-            	
-        $argumentos = func_get_args();
-		if (func_num_args()==1)
-		{
-			//arreglos
-			$ids = array();
-			$materials = array();
-			//instruccion
-			$instruccion = "SELECT material_Id FROM produced WHERE  model_Id = ? GROUP BY material_Id";
-			//abrimos conexion
-			parent::abrirConexion();
-			//preparar comando
-			$comando = parent::$conexion->prepare($instruccion);
-			$comando->bind_param('i', $argumentos[0]);
-			//ejecutar comando
-			$comando->execute();
-			//ligar resultado
-			$comando->bind_result($id);
-			//llenar arreglo de ids
-			while ($comando->fetch()) array_push($ids, $id);
-			//cerrar comando
-			mysqli_stmt_close($comando);
-			//cerrar conexion
-			parent::cerrarConexion();
-			//llenar arreglo 
-			foreach ($ids as $id)
-				array_push($materials, new Material($id));
-			//regresar resultado
-			return $materials;//regresamos el resultado
+		{	
+            $argumentos = func_get_args();
+            if (func_num_args()==1)
+            {
+                //arreglos
+                $ids = array();
+                $materials = array();
+                //instruccion
+                $instruccion = "SELECT Id FROM material WHERE  model_Id = ? GROUP BY Id";
+                //abrimos conexion
+                parent::abrirConexion();
+                //preparar comando
+                $comando = parent::$conexion->prepare($instruccion);
+                $comando->bind_param('i', $argumentos[0]);
+                //ejecutar comando
+                $comando->execute();
+                //ligar resultado
+                $comando->bind_result($id);
+                //llenar arreglo de ids
+                while ($comando->fetch()) array_push($ids, $id);
+                //cerrar comando
+                mysqli_stmt_close($comando);
+                //cerrar conexion
+                parent::cerrarConexion();
+                //llenar arreglo 
+                foreach ($ids as $id)
+                    array_push($materials, new Material($id));
+                //regresar resultado
+                return $materials;//regresamos el resultado
 			}
-			
         }
 		
 		 public static function descriptionMaterial()
@@ -273,21 +277,24 @@
 			
 		}
 		
-    	public static function MateriaProduction()
+    	public static function MaterialProduction()
 		{
 			 $argumentos = func_get_args();
-			if (func_num_args()==1)
+			if (func_num_args()==2)
 			{
 				//arreglos
 				$ids = array();
 				$mat = array();
 				//instruccion
-				$instruccion = 'select id from model where number = ? and status_Id = 1';
+				$instruccion = 'SELECT material.id FROM material
+								JOIN model ON material.model_Id = model.id
+								JOIN po ON material.po_id = po.Id
+								WHERE po.id = ? AND po.status_Id = 1 AND po.subcontractor_Id = ?';
 				//abrimos conexion
 				parent::abrirConexion();
 				//preparar comando
 				$comando = parent::$conexion->prepare($instruccion);
-				$comando->bind_param('i', $argumentos[0]);
+				$comando->bind_param('ii', $argumentos[0], $argumentos[1]);
 				//ejecutar comando
 				$comando->execute();
 				//ligar resultado
@@ -316,8 +323,8 @@
 				$mat = array();
 				//instruccion
 				$instruccion = 'SELECT material.id FROM material 
-                            JOIN po ON material.po_id = po.Id
-                            WHERE po_Id = ? and po.subcontractor_Id = ?';
+								JOIN po ON material.po_id = po.Id
+								WHERE po_Id = ? AND po.subcontractor_Id = ?';
 				//abrimos conexion
 				parent::abrirConexion();
 				//preparar comando
@@ -349,7 +356,7 @@
 				$ids = array();
 				$mat = array();
 				//instruccion
-				$instruccion = 'SELECT id FROM delivery where packing = ? AND statusId = 1';
+				$instruccion = 'SELECT id FROM delivery where packing = ? AND statusid = 1';
 				//abrimos conexion
 				parent::abrirConexion();
 				//preparar comando
@@ -373,5 +380,99 @@
 				}
 			
 		}
-	}			
+        public static function Subcontractors()
+		{
+				$argumentos = func_get_args();
+				//arreglos
+				$ids = array();
+				$sub = array();
+				//instruccion
+				if (func_num_args()==1)
+				{
+					$instruccion = 'SELECT subcontractor_id FROM discrepancy WHERE discrepancy_date=?';
+					parent::abrirConexion();
+					//preparar comando
+					$comando = parent::$conexion->prepare($instruccion);
+					$comando->bind_param('s', $argumentos[0]);
+				}
+				if (func_num_args()==2)
+				{
+					$instruccion = 'SELECT subcontractor_id FROM discrepancy WHERE discrepancy_date BETWEEN ? AND ? GROUP BY subcontractor_id';
+					parent::abrirConexion();
+					//preparar comando
+					$comando = parent::$conexion->prepare($instruccion);
+					$comando->bind_param('ss', $argumentos[0], $argumentos[1]);
+				}
+				//ejecutar comando
+				$comando->execute();
+				//ligar resultado
+				$comando->bind_result($id);
+				//llenar arreglo de ids
+				while ($comando->fetch()) array_push($ids, $id);
+				//cerrar comando
+				mysqli_stmt_close($comando);
+				//cerrar conexion
+				parent::cerrarConexion();
+				//llenar arreglo 
+				foreach ($ids as $id)
+					array_push($sub, new Subcontractor($id));
+				//regresar resultado
+				return $sub;//regresamos el resultado
+		}
+        public static function UsersList()
+        {
+            //arreglos
+            $ids = array();
+            $usr = array();
+            //instruccion
+            $instruccion = 'SELECT email from users order by id';
+            //abrimos conexion
+            parent::abrirConexion();
+            //preparar comando
+            $comando = parent::$conexion->prepare($instruccion);
+            //ejecutar comando
+            $comando->execute();
+            //ligar resultado
+            $comando->bind_result($id);
+            //llenar arreglo de ids
+            while ($comando->fetch()) array_push($ids, $id);
+            //cerrar comando
+            mysqli_stmt_close($comando);
+            //cerrar conexion
+            parent::cerrarConexion();
+            //llenar arreglo    
+            foreach ($ids as $id)
+                array_push($usr, new User($id));
+            //regresar resultado
+            return $usr;//regresamos el resultado
+
+        }
+        public static function PackingList()
+        {
+            //arreglos
+            $ids = array();
+            $deliveries = array();
+            //instruccion
+            $instruccion = 'SELECT id FROM delivery WHERE statusId= 1 GROUP BY packing';
+            //abrimos conexion
+            parent::abrirConexion();
+            //preparar comando
+            $comando = parent::$conexion->prepare($instruccion);
+            //ejecutar comando
+            $comando->execute();
+            //ligar resultado
+            $comando->bind_result($id);
+            //llenar arreglo de ids
+            while ($comando->fetch()) array_push($ids, $id);
+            //cerrar comando
+            mysqli_stmt_close($comando);
+            //cerrar conexion
+            parent::cerrarConexion();
+            //llenar arreglo    
+            foreach ($ids as $id)
+                array_push($deliveries, new Delivery($id));
+            //regresar resultado
+            return $deliveries;//regresamos el resultado
+        }
+	}
 ?>
