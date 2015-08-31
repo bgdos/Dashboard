@@ -18,7 +18,7 @@
                     $status = 2;
                 else
                     $status = 1;
-                $instruccion .= "update model set number = ".$models[$i]['model'] .",  owner = '".$models[$i]['owner']."',  lot = ".$models[$i]['lot'].",  sdate = '".$models[$i]['date']."', line_id =".$models[$i]['line'].", status_id =". $status ."where id = ".$models[$i]['id'].";";
+                $instruccion .= "update model set number = ".$models[$i]['model'] .",  owner = '".$models[$i]['owner']."',  lot = ".$models[$i]['lot'].",  sdate = '".$models[$i]['date']."', line_id =".$models[$i]['line'].", status_id =". $status ." where id = ".$models[$i]['id'].";";
 			
 			}
 			if ($m->editSchedule($instruccion) === true)
