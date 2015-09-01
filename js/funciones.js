@@ -167,132 +167,160 @@ function onclickSchedule(model, number, lot)
 /* Model produced / delivered details */
 function productionStatus(daily)
 {	
+    var rfdp = 0, rftp = 0, rfdd = 0, rftd=0;
+    var rbdp = 0, rbtp = 0, rbdd = 0, rbtd=0;
+    var lgdp = 0, lgtp = 0, lgdd = 0, lgtd=0;
+    var lldp = 0, lltp = 0, lldd = 0, lltd=0;
+    var sldp = 0, sltp = 0, sldd = 0, sltd=0;
+    var xfdp = 0, xftp = 0, xfdd = 0, xftd=0;
+    var xddp = 0, xdtp = 0, xddd = 0, xdtd=0;
+    var fpdp = 0, fptp = 0, fpdd = 0, fptd=0;
+    var phdp = 0, phtp = 0, phdd = 0, phtd=0;
+    var xadp = 0, xatp = 0, xadd = 0, xatd=0;
+    var tadp = 0, tatp = 0, tadd = 0, tatd=0;
+    var tbdp = 0, tbtp = 0, tbdd = 0, tbtd=0;
+    var rcdp = 0, rctp = 0, rcdd = 0, rctd=0;
+    var badp = 0, batp = 0, badd = 0, batd=0;
 	for(var i = 0; i < daily.length; i++)
 		{
 			if (daily[i].description == 'REAR FRAME')
 				{
+                    rfdp += daily[i].dailyP; rftp += daily[i].sumP; rfdd += daily[i].dailyD; rftd += daily[i].sumD;
                     document.getElementById('rf-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('rf-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('rf-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('rf-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('rf-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('rf-dp').innerHTML = rfdp + " /";
+					document.getElementById('rf-tp').innerHTML = " " + rftp;
+					document.getElementById('rf-dd').innerHTML = rfdd + " /";
+					document.getElementById('rf-td').innerHTML = " " + rftd;
 					
 				}
 			if (daily[i].description == 'REAR BUMPER')
 				{
+                    rbdp += daily[i].dailyP; rbtp += daily[i].sumP; rbdd += daily[i].dailyD; rftd += daily[i].sumD;
                     document.getElementById('rb-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('rb-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('rb-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('rb-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('rb-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('rb-dp').innerHTML = rbdp + " /";
+					document.getElementById('rb-tp').innerHTML = " " + rbtp;
+					document.getElementById('rb-dd').innerHTML = rbdd + " /";
+					document.getElementById('rb-td').innerHTML = " " + rftd;
 					
 				}
 			if (daily[i].description == 'LANDING GEAR')
 				{
+                    lgdp += daily[i].dailyP; lgtp += daily[i].sumP; lgdd += daily[i].dailyD; lgtd += daily[i].sumD;
                     document.getElementById('lg-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('lg-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('lg-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('lg-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('lg-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('lg-dp').innerHTML = lgdp + " /";
+					document.getElementById('lg-tp').innerHTML = " " + lgtp;
+					document.getElementById('lg-dd').innerHTML = lgdd + " /";
+					document.getElementById('lg-td').innerHTML = " " + lgtd;
 					
 				}
 			if (daily[i].description == 'LARGE SLIDER')
 				{
+                    lldp += daily[i].dailyP; lltp += daily[i].sumP; lldd += daily[i].dailyD; lltd += daily[i].sumD;
                     document.getElementById('ls-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('ls-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('ls-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('ls-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('ls-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('ls-dp').innerHTML = lldp + " /";
+					document.getElementById('ls-tp').innerHTML = " " + lltp;
+					document.getElementById('ls-dd').innerHTML = lldd + " /";
+					document.getElementById('ls-td').innerHTML = " " + lltd;
 					
 				}
 			if (daily[i].description == 'SMALL SLIDER')
 				{
+                    sldp += daily[i].dailyP; sltp += daily[i].sumP; sldd += daily[i].dailyD; sltd += daily[i].sumD;
                     document.getElementById('sl-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('sl-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('sl-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('sl-dd').innerHTML = daily[i].dailyD  + " /";
+					document.getElementById('sl-dp').innerHTML = sldp + " /";
+					document.getElementById('sl-tp').innerHTML = " " + sltp;
+					document.getElementById('sl-dd').innerHTML = sldd + " /";
 					document.getElementById('sl-td').innerHTML = " " + daily[i].sumD;
 					
 				}
 			if (daily[i].description == 'X-MEM FWD')
 				{
+                    xfdp += daily[i].dailyP; xftp += daily[i].sumP; xfdd += daily[i].dailyD; xftd += daily[i].sumD;
                     document.getElementById('xf-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('xf-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('xf-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('xf-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('xf-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('xf-dp').innerHTML = xfdp + " /";
+					document.getElementById('xf-tp').innerHTML = " " + xftp;
+					document.getElementById('xf-dd').innerHTML = xfdd + " /";
+					document.getElementById('xf-td').innerHTML = " " + xftd;
 					
 				}
 			if (daily[i].description == 'X-MEM DROP')
 				{
+                    xddp += daily[i].dailyP; xdtp += daily[i].sumP; xddd += daily[i].dailyD; xdtd += daily[i].sumD;
                     document.getElementById('xd-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('xd-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('xd-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('xd-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('xd-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('xd-dp').innerHTML = xddp + " /";
+					document.getElementById('xd-tp').innerHTML = " " + xdtp;
+					document.getElementById('xd-dd').innerHTML = xddd  + " /";
+					document.getElementById('xd-td').innerHTML = " " + xdtd;
 					
 				}
 			if (daily[i].description == 'FRONT POST')
 				{
+                    fpdp += daily[i].dailyP; fptp += daily[i].sumP; fpdd += daily[i].dailyD; fptd += daily[i].sumD;
                     document.getElementById('fp-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('fp-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('fp-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('fp-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('fp-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('fp-dp').innerHTML = fpdp + " /";
+					document.getElementById('fp-tp').innerHTML = " " + fptp;
+					document.getElementById('fp-dd').innerHTML = fpdd + " /";
+					document.getElementById('fp-td').innerHTML = " " + fptd;
 					
 				}
             if (daily[i].description == 'PINTLE HOOK')
 				{
+                    phdp += daily[i].dailyP; phtp += daily[i].sumP; phdd += daily[i].dailyD; phtd += daily[i].sumD;
                     document.getElementById('ph-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('ph-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('ph-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('ph-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('ph-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('ph-dp').innerHTML = phdp + " /";
+					document.getElementById('ph-tp').innerHTML = " " + phtp;
+					document.getElementById('ph-dd').innerHTML = phdd + " /";
+					document.getElementById('ph-td').innerHTML = " " + phtd;
 					
 				}
             if (daily[i].description == 'X-MEMBER ASSY')
 				{
+                    xadp += daily[i].dailyP; xatp += daily[i].sumP; xadd += daily[i].dailyD; xatd += daily[i].sumD;
                     document.getElementById('xa-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('xa-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('xa-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('xa-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('xa-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('xa-dp').innerHTML = xadp + " /";
+					document.getElementById('xa-tp').innerHTML = " " + xatp;
+					document.getElementById('xa-dd').innerHTML = xadd + " /";
+					document.getElementById('xa-td').innerHTML = " " + xatd;
 					
 				}
             if (daily[i].description == 'TRANSITION ASSY')
 				{
+                    tadp += daily[i].dailyP; tatp += daily[i].sumP; tadd += daily[i].dailyD; tatd += daily[i].sumD;
                     document.getElementById('ta-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('ta-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('ta-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('ta-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('ta-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('ta-dp').innerHTML = tadp + " /";
+					document.getElementById('ta-tp').innerHTML = " " + tatp;
+					document.getElementById('ta-dd').innerHTML = tadd + " /";
+					document.getElementById('ta-td').innerHTML = " " + tatd;
 					
 				}
             if (daily[i].description == 'TIRE BOX')
 				{
+                    tbdp += daily[i].dailyP; tbtp += daily[i].sumP; tbdd += daily[i].dailyD; tbtd += daily[i].sumD;
                     document.getElementById('tb-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('tb-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('tb-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('tb-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('tb-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('tb-dp').innerHTML = tbdp + " /";
+					document.getElementById('tb-tp').innerHTML = " " + tbtp;
+					document.getElementById('tb-dd').innerHTML = tbdd + " /";
+					document.getElementById('tb-td').innerHTML = " " + tbtd;
 					
 				}
             if (daily[i].description == 'ROLLER CONVEYOR')
 				{
+                    rcdp += daily[i].dailyP; rctp += daily[i].sumP; rcdd += daily[i].dailyD; rctd += daily[i].sumD;
                     document.getElementById('rc-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('document.removeChild(elem);-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('rc-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('rc-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('rc-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('rc-dp').innerHTML = rcdp + " /";
+					document.getElementById('rc-tp').innerHTML = " " + rctp;
+					document.getElementById('rc-dd').innerHTML = rcdd + " /";
+					document.getElementById('rc-td').innerHTML = " " + rctd;
 					
 				}
             if (daily[i].description == 'BASE ASSY')
 				{
+                    badp += daily[i].dailyP; batp += daily[i].sumP; badd += daily[i].dailyD; batd += daily[i].sumD;
                     document.getElementById('ba-dp').parentNode.parentNode.parentNode.style.display = 'inline';
-					document.getElementById('ba-dp').innerHTML = daily[i].dailyP + " /";
-					document.getElementById('ba-tp').innerHTML = " " + daily[i].sumP;
-					document.getElementById('ba-dd').innerHTML = daily[i].dailyD  + " /";
-					document.getElementById('ba-td').innerHTML = " " + daily[i].sumD;
+					document.getElementById('ba-dp').innerHTML = badp + " /";
+					document.getElementById('ba-tp').innerHTML = " " + batp;
+					document.getElementById('ba-dd').innerHTML = badd + " /";
+					document.getElementById('ba-td').innerHTML = " " + batd;
 					
 				}
 			
